@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\AsyncDesignPattern.Common.csproj" />
+    <ProjectReference Include="..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
   </ItemGroup>
 
 </Project>

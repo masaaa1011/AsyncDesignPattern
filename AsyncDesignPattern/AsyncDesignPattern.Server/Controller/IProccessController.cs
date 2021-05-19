@@ -9,6 +9,6 @@ namespace AsyncDesignPattern.Server.Controller
 {
     public interface IProccessController
     {
-        void Request(IAsyncProccess proccess)
+        void Request(IAsyncProccess proccess);
     }
 }
