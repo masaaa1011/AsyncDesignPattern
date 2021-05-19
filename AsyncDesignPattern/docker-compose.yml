@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  asyncdesignpattern.client:
+    image: ${DOCKER_REGISTRY-}asyncdesignpatternclient
+    build:
+      context: .
+      dockerfile: Client/Dockerfile
