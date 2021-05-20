@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
+    <ProjectReference Include="..\DesignPatterns\Immutable\Immutable.csproj" />
+    <ProjectReference Include="..\DesignPatterns\SingleThreadedExecution\SingleThreadedExecution.csproj" />
   </ItemGroup>
 
 </Project>

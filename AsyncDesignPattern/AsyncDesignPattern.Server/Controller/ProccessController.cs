@@ -9,7 +9,7 @@ namespace AsyncDesignPattern.Server.Controller
 {
     public class ProccessController : IProccessController
     {
-        public void Request(IAsyncProccess proccess)
+        public void Request(ITask proccess)
         {
             throw new NotImplementedException();
         }

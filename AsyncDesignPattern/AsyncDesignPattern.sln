@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Server", "AsyncDesignPattern.Server\AsyncDesignPattern.Server.csproj", "{3A92A32A-F37D-470E-A16A-DA28D6706674}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.ProccessRepository", "AsyncDesignPattern.ProccessRepository\AsyncDesignPattern.ProccessRepository.csproj", "{876712E5-7DD1-437F-82E5-E099A8613393}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Repository", "AsyncDesignPattern.ProccessRepository\AsyncDesignPattern.Repository.csproj", "{876712E5-7DD1-437F-82E5-E099A8613393}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

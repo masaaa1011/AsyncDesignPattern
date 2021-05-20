@@ -9,6 +9,6 @@ namespace AsyncDesignPattern.Server.ProccessHub.Hub.Factory
     public class ProccessHubFactory
     {
         public static ProccessHub Create() => 
-            new ProccessHub() { Agent = AgentFactory.Create(), ProccessCollection = new Queue<IAsyncProccess>() };
+            new ProccessHub() { Agent = AgentFactory.Create(), ProccessCollection = new Queue<ITask>() };
     }
 }

@@ -1,9 +1,9 @@
 ﻿using AsyncDesignPattern.Common.Proccess;
 using System;
 
-namespace SingleThreadedExecution
+namespace Immutable
 {
-    public class SingleThreadedExecutionProccess : IAsyncProccess
+    public class ImmutableTask : ITask
     {
         public void ExecuteAsync()
         {

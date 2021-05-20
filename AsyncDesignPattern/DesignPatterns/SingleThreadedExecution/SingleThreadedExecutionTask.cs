@@ -1,9 +1,9 @@
 ﻿using AsyncDesignPattern.Common.Proccess;
 using System;
 
-namespace ActiveObject
+namespace SingleThreadedExecution
 {
-    public class ActiveObjectProccess : IAsyncProccess
+    public class SingleThreadedExecutionTask : ITask
     {
         public void ExecuteAsync()
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AsyncDesignPattern.Common.Proccess
 {
-    public interface IAsyncProccess
+    public interface ITask
     {
         public void ExecuteAsync();
     }

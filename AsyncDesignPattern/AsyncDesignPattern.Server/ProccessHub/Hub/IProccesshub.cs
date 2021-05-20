@@ -9,8 +9,8 @@ namespace AsyncDesignPattern.Server.ProccessHub.Hub
     public interface IProccesshub
     {
         public IAgent Agent { get; }
-        Queue<IAsyncProccess> ProccessCollection { get; }
+        Queue<ITask> ProccessCollection { get; }
         public void Accept(IAgent agent);
-        public void Add(IAsyncProccess poccess);
+        public void Add(ITask poccess);
     }
 }
