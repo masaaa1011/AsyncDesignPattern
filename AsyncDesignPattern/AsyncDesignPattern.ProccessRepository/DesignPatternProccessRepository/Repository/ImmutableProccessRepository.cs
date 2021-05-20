@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Proccess
+namespace AsyncDesignPattern.DesignPatternProccessRepository.Repository
 {
-    public class SingleThreadedExecutionProccessRepository : IProccessRepository
+    public class ImmutableProccessRepository : IProccessRepository
     {
-        public List<IAsyncProccess> CreateMock()
+        public IAsyncProccess CreateSingleProccess()
         {
             throw new NotImplementedException();
         }

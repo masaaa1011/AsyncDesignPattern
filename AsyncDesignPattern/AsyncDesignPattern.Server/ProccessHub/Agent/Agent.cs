@@ -1,10 +1,10 @@
 ﻿
-using AsyncDesignPattern.Server.HubService.Hub;
+using AsyncDesignPattern.Server.ProccessHub.Hub;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsyncDesignPattern.Server.HubService.Agent
+namespace AsyncDesignPattern.Server.ProccessHub.Agent
 {
     public class Agent : IAgent
     {

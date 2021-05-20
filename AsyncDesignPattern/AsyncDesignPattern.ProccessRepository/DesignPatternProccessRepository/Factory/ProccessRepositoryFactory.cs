@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Proccess.Factory
+namespace AsyncDesignPattern.DesignPatternProccessRepository.Repository.Factory
 {
     public static class ProccessRepositoryFactory
     {

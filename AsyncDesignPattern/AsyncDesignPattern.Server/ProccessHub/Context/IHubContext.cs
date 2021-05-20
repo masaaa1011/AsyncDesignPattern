@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsyncDesignPattern.Server.HubService.Context
+namespace AsyncDesignPattern.Server.ProccessHub.Context
 {
     public interface IHubContext
     {

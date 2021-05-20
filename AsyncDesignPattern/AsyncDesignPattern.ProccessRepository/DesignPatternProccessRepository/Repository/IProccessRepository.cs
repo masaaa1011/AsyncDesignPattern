@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Proccess
+namespace AsyncDesignPattern.DesignPatternProccessRepository.Repository
 {
     public interface IProccessRepository
     {
-        List<IAsyncProccess> CreateMock();
+        IAsyncProccess CreateSingleProccess();
     }
 }

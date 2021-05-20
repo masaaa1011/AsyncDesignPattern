@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsyncDesignPattern.Server.HubService.Agent.Factory
+namespace AsyncDesignPattern.Server.ProccessHub.Agent.Factory
 {
     public static class AgentFactory
     {

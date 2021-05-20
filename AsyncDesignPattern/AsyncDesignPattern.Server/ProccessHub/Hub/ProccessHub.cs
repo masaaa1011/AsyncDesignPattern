@@ -1,10 +1,10 @@
 ﻿using AsyncDesignPattern.Common.Proccess;
-using AsyncDesignPattern.Server.HubService.Agent;
+using AsyncDesignPattern.Server.ProccessHub.Agent;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsyncDesignPattern.Server.HubService.Hub
+namespace AsyncDesignPattern.Server.ProccessHub.Hub
 {
     public class ProccessHub : IProccesshub
     {
