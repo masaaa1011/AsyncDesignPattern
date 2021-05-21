@@ -13,7 +13,8 @@ namespace AsyncDesignPattern.Repository.Factory
 {
     public static class MockRecordRepositoryFactory
     {
-        public static IRecordRepository Create() 
-            => new MockRecordRepository<MockEntity, MockRecord>(new MockEntity(MockRecordTable.CrreateRecords().ToList()));
+        public static IRepository Create() 
+            => new MockRecordRepository<MockEntity, MockRecord>();
+            //=> new MockRecordRepository<MockEntity, MockRecord>(new MockEntity(MockRecordTable.CrreateRecords().ToList()));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AsyncDesignPattern.Common.Proccess;
+using AsyncDesignPattern.Repository.Database.Tables;
 using AsyncDesignPattern.Repository.Dto;
 using AsyncDesignPattern.Repository.Entities;
 using System;
@@ -9,12 +10,17 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Repository.Repository
 {
-    public class MockRecordRepository<T1, T2> : IRecordRepository where T1 : IEntity<T2> where T2 : IRecord
+    public class MockRecordRepository<T1, T2> : IRepository where T1 : IEntity<T2>, new() where T2 : IRecord
     {
-        internal MockRecordRepository(T1 entity)
+        public MockRecordRepository()
         {
-            Entity = entity;
+            Entity = new T1();
         }
+
+        //internal MockRecordRepository(T1 entity)
+        //{
+        //    Entity = entity;
+        //}
 
         public T1 Entity { get; private set; }
 

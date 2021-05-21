@@ -10,10 +10,15 @@ namespace AsyncDesignPattern.Repository.Entities
 {
     public class MockEntity : IEntity<MockRecord>
     {
-        public MockEntity(List<MockRecord> records)
+        public MockEntity()
         {
-            Records = records;
+            Records = new List<MockRecord>(MockRecordTable.CrreateRecords().ToList());
         }
+
+        //public MockEntity(List<MockRecord> records)
+        //{
+        //    Records = records;
+        //}
 
         public List<MockRecord> Records { get; private set; }
     }

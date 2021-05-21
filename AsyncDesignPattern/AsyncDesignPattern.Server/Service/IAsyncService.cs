@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace AsyncDesignPattern.Server.Service
 {
-    public interface IService
+    public interface IAsyncService
     {
         public ActionResult ExecuteAsync();
     }

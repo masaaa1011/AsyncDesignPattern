@@ -1,5 +1,6 @@
 using AsyncDesignPattern.Repository.Factory;
 using AsyncDesignPattern.Server.Controller;
+using AsyncDesignPattern.Server.Service;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,18 +14,16 @@ namespace Client
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IProccessController _controller;
+        private readonly IAsyncService _service;
 
-        public Worker(ILogger<Worker> logger, IProccessController controller)
+        public Worker(ILogger<Worker> logger, IAsyncService service)
         {
             _logger = logger;
-            _controller = controller;
+            _service = service;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var repository = MockRecordRepositoryFactory.Create();
-
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

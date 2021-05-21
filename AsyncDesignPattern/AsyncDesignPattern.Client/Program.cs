@@ -1,4 +1,8 @@
+using AsyncDesignPattern.Repository.Dto;
+using AsyncDesignPattern.Repository.Entities;
+using AsyncDesignPattern.Repository.Repository;
 using AsyncDesignPattern.Server.Controller;
+using AsyncDesignPattern.Server.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -20,7 +24,9 @@ namespace Client
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>()
-                            .AddTransient<IProccessController, ProccessController>();
+                            .AddTransient<IAsyncService, AsyncProccessService>()
+                            .AddTransient<IProccessController, ProccessController>()
+                            .AddTransient<IRepository, MockRecordRepository<MockEntity, MockRecord>>();
                 });
     }
 }

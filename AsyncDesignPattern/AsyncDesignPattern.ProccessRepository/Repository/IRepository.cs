@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Repository.Repository
 {
-    public interface IRecordRepository
+    public interface IRepository
     {
         IRecord GetByIdAsync();
         List<IRecord> GetByNameAsync();
