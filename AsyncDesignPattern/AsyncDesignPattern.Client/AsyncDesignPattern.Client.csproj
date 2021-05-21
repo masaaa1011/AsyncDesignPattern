@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AsyncDesignPattern.ProccessRepository\AsyncDesignPattern.Repository.csproj" />
     <ProjectReference Include="..\AsyncDesignPattern.Server\AsyncDesignPattern.Server.csproj" />
   </ItemGroup>
 </Project>

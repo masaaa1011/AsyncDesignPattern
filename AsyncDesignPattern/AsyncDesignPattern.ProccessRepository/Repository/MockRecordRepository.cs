@@ -11,7 +11,12 @@ namespace AsyncDesignPattern.Repository.Repository
 {
     public class MockRecordRepository<T1, T2> : IRecordRepository where T1 : IEntity<T2> where T2 : IRecord
     {
-        public IEntity<MyRecord> Entity { get; private set; }
+        internal MockRecordRepository(T1 entity)
+        {
+            Entity = entity;
+        }
+
+        public T1 Entity { get; private set; }
 
         public void Add()
         {
@@ -23,12 +28,12 @@ namespace AsyncDesignPattern.Repository.Repository
             throw new NotImplementedException();
         }
 
-        public ITask GetByIdAsync()
+        public IRecord GetByIdAsync()
         {
             throw new NotImplementedException();
         }
 
-        public List<ITask> GetByNameAsync()
+        public List<IRecord> GetByNameAsync()
         {
             throw new NotImplementedException();
         }

@@ -40,12 +40,13 @@ namespace AsyncDesignPattern.Repository.Database.Tables
             }
         }
     }
-    public static class MyRecordsTable
+    public static class MockRecordTable
     {
-        public static MyRecord CreateSingleRevord(Guid id, string name) => new MyRecord { Id = id, Name = name };
-        public static IEnumerable<MyRecord> CrreateRecords()
+        public static MockRecord CreateSingleRevord(Guid id, string name) => 
+            new MockRecord { Id = id, Name = name, IsDelete = 0.Equals(DateTime.Now.Millisecond % 2) ? true : false, Day = DateTime.Now };
+        public static IEnumerable<MockRecord> CrreateRecords()
         {
-            foreach (var i in 0..10) yield return CreateSingleRevord(Guid.NewGuid(), $"name_{i}");
+            foreach (var i in 0..^10000) yield return CreateSingleRevord(Guid.NewGuid(), $"name_{i}");
         }
     }
 }

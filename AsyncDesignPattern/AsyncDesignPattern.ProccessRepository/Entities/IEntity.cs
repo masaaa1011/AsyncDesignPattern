@@ -9,6 +9,6 @@ namespace AsyncDesignPattern.Repository.Entities
 {
     public interface IEntity<T> where T : IRecord
     {
-        public List<T> Records { get; }
+        List<T> Records { get; }
     }
 }

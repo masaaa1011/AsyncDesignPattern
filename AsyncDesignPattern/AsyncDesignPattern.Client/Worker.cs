@@ -1,3 +1,4 @@
+using AsyncDesignPattern.Repository.Factory;
 using AsyncDesignPattern.Server.Controller;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,8 @@ namespace Client
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var repository = MockRecordRepositoryFactory.Create();
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

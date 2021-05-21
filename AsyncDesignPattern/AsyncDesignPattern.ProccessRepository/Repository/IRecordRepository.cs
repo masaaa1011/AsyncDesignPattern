@@ -1,4 +1,5 @@
 ﻿using AsyncDesignPattern.Common.Proccess;
+using AsyncDesignPattern.Repository.Dto;
 using AsyncDesignPattern.Repository.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace AsyncDesignPattern.Repository.Repository
 {
     public interface IRecordRepository
     {
-        ITask GetByIdAsync();
-        List<ITask> GetByNameAsync();
+        IRecord GetByIdAsync();
+        List<IRecord> GetByNameAsync();
         void Add();
         void AddRange();
         void RemoveRange();

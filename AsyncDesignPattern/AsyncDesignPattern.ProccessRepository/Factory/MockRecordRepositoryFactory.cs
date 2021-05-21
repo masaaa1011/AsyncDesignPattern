@@ -1,4 +1,5 @@
 ﻿using AsyncDesignPattern.Common.Enum;
+using AsyncDesignPattern.Repository.Database.Tables;
 using AsyncDesignPattern.Repository.Dto;
 using AsyncDesignPattern.Repository.Entities;
 using AsyncDesignPattern.Repository.Repository;
@@ -10,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Repository.Factory
 {
-    public static class RecordRepositoryFactory
+    public static class MockRecordRepositoryFactory
     {
-        public static IRecordRepository Create() => new MockRecordRepository<MyEntity<MyRecord>, MyRecord>();
+        public static IRecordRepository Create() 
+            => new MockRecordRepository<MockEntity, MockRecord>(new MockEntity(MockRecordTable.CrreateRecords().ToList()));
     }
 }
