@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Client
 {
-    public class Worker : BackgroundService
+    public class ClientWorker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<ClientWorker> _logger;
         private readonly ITaskHandler _handler;
 
-        public Worker(ILogger<Worker> logger, ITaskHandler handler)
+        public ClientWorker(ILogger<ClientWorker> logger, ITaskHandler handler)
         {
             _logger = logger;
             _handler = handler;

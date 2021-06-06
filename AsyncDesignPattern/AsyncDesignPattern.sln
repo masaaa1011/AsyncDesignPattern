@@ -35,13 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Common",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Repository", "AsyncDesignPattern.Repository\AsyncDesignPattern.Repository.csproj", "{425D94F9-61BA-4F4C-9886-EAED5A5075E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.ProcessFactory", "AsyncDesignPattern.ProcessFactory\AsyncDesignPattern.ProcessFactory.csproj", "{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.SenderReciever", "AsyncDesignPattern.SenderReciever\AsyncDesignPattern.SenderReciever.csproj", "{80C42571-9A7D-46BF-8D23-A0D4BC2D63D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Client", "AsyncDesignPattern.Application\AsyncDesignPattern.Client.csproj", "{17ADCB66-CD01-4A24-8CBA-5E368F43AD3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.TaskFamily", "AsyncDesignPattern.TaskFamily\AsyncDesignPattern.TaskFamily.csproj", "{9CF79CFC-7310-4C77-8927-0B1161E10469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncDesignPattern.Server", "AsyncDesignPattern.Server\AsyncDesignPattern.Server.csproj", "{005CA87F-97AE-4FDA-B290-4E0B4B411627}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,14 +171,6 @@ Global
 		{425D94F9-61BA-4F4C-9886-EAED5A5075E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{425D94F9-61BA-4F4C-9886-EAED5A5075E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{425D94F9-61BA-4F4C-9886-EAED5A5075E7}.Release|x86.Build.0 = Release|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Debug|x86.Build.0 = Debug|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Release|x86.ActiveCfg = Release|Any CPU
-		{595429BA-6BAF-4022-A4F4-30AB2A5E63CA}.Release|x86.Build.0 = Release|Any CPU
 		{80C42571-9A7D-46BF-8D23-A0D4BC2D63D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80C42571-9A7D-46BF-8D23-A0D4BC2D63D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C42571-9A7D-46BF-8D23-A0D4BC2D63D8}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -203,6 +195,14 @@ Global
 		{9CF79CFC-7310-4C77-8927-0B1161E10469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CF79CFC-7310-4C77-8927-0B1161E10469}.Release|x86.ActiveCfg = Release|Any CPU
 		{9CF79CFC-7310-4C77-8927-0B1161E10469}.Release|x86.Build.0 = Release|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Debug|x86.Build.0 = Debug|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Release|x86.ActiveCfg = Release|Any CPU
+		{005CA87F-97AE-4FDA-B290-4E0B4B411627}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
