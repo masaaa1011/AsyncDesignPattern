@@ -10,19 +10,14 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Repository.Repository
 {
-    public class MockRecordRepository<T1, T2> : IRepository where T1 : IEntity<T2>, new() where T2 : IRecord
+    public class MockRecordRepository : IRepository
     {
         public MockRecordRepository()
         {
-            Entity = new T1();
+            Entity = new MockEntity();
         }
 
-        //internal MockRecordRepository(T1 entity)
-        //{
-        //    Entity = entity;
-        //}
-
-        public T1 Entity { get; private set; }
+        public MockEntity Entity { get; private set; }
 
         public void Add()
         {

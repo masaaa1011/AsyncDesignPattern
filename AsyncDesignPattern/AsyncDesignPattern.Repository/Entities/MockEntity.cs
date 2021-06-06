@@ -15,11 +15,6 @@ namespace AsyncDesignPattern.Repository.Entities
             Records = new List<MockRecord>(MockRecordTable.CrreateRecords().ToList());
         }
 
-        //public MockEntity(List<MockRecord> records)
-        //{
-        //    Records = records;
-        //}
-
         public List<MockRecord> Records { get; private set; }
     }
 }
