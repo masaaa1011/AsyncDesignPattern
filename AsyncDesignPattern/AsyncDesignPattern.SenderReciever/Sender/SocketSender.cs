@@ -12,6 +12,7 @@ namespace AsyncDesignPattern.SenderReciever.Sender
 {
     public class SocketSender : ISender<SocketContext, SocketToken>
     {
+        internal Socket Socket { get; set; }
 
         internal SocketSender(SocketContext context)
         {
@@ -25,8 +26,8 @@ namespace AsyncDesignPattern.SenderReciever.Sender
 
             await Task.Run(() =>
             {
-                Context.Socket.SendAsync(EventArgs);
-                Context.Socket.ReceiveAsync(EventArgs);
+                Socket.SendAsync(EventArgs);
+                Socket.ReceiveAsync(EventArgs);
             });
 
             return (SocketToken)EventArgs.UserToken;
@@ -38,8 +39,8 @@ namespace AsyncDesignPattern.SenderReciever.Sender
 
             await Task.Run(() =>
             {
-                Context.Socket.SendAsync(EventArgs);
-                Context.Socket.ReceiveAsync(EventArgs);
+                Socket.SendAsync(EventArgs);
+                Socket.ReceiveAsync(EventArgs);
             });
 
             return (SocketToken)EventArgs.UserToken;
@@ -47,9 +48,9 @@ namespace AsyncDesignPattern.SenderReciever.Sender
 
         public SocketToken Send(SocketToken token)
         {
-            Context.Socket.Send(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(token)));
+            Socket.Send(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(token)));
             var buffer = new List<byte>();
-            var bufferRec = Context.Socket.Receive(buffer.ToArray());
+            var bufferRec = Socket.Receive(buffer.ToArray());
             var response = Encoding.UTF8.GetString(buffer.ToArray(), 0, bufferRec);
 
             return (SocketToken)JsonSerializer.Deserialize(response, token.GetType());
