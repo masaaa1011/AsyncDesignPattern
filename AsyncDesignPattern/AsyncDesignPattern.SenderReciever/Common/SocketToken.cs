@@ -1,4 +1,5 @@
-﻿using AsyncDesignPattern.SenderReciever.Common.Enum;
+﻿using AsyncDesignPattern.Common.Enum;
+using AsyncDesignPattern.SenderReciever.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,17 @@ namespace AsyncDesignPattern.SenderReciever.Common
 {
     public class SocketToken : IToken
     {
-        internal SocketToken(Guid id, string body, CommunicationType communicationType)
+        
+        public SocketToken() { }
+        public SocketToken(Guid id, string body, DesingPatternType desingPatternType)
         {
             Id = id;
             Body = body;
-            CommunicationType = communicationType;
+            DesingPatternType = desingPatternType;
         }
 
         public Guid Id { get; set; }
-        public CommunicationType CommunicationType { get; set; }
+        public DesingPatternType DesingPatternType { get; set; }
         public StatusCode StatusType { get; set; }
         public string Body { get; set; }
     }

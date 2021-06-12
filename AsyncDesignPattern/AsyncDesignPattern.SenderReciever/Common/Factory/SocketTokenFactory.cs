@@ -1,4 +1,5 @@
-﻿using AsyncDesignPattern.SenderReciever.Common.Enum;
+﻿using AsyncDesignPattern.Common.Enum;
+using AsyncDesignPattern.SenderReciever.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace AsyncDesignPattern.SenderReciever.Common.Factory
 {
     public static class SocketTokenFactory
     {
-        public static SocketToken CreateToken(Guid id, object payload, CommunicationType communicationType)
+        public static SocketToken CreateToken(Guid id, object payload, DesingPatternType desingPatternType)
             => new SocketToken(
                     id: id,
                     body: JsonSerializer.Serialize(payload),
-                    communicationType: communicationType
+                    desingPatternType: desingPatternType
                 );
     }
 }

@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+	<LangVersion>9.0</LangVersion>
     <UserSecretsId>dotnet-AsyncDesignPattern.Server-4556BB5A-CFBE-4C86-8633-22338C56C784</UserSecretsId>
   </PropertyGroup>
 

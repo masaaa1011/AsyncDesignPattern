@@ -8,5 +8,6 @@ namespace AsyncDesignPattern.SenderReciever.Common.Enum
 {
     public enum CommunicationType
     {
+
     }
 }
