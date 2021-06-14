@@ -21,7 +21,6 @@ namespace AsyncDesignPattern.Server
         {
             _logger = logger;
             _reciever = reciever.Value;
-            //_reciever.UseContext((SocketContext)context.Value);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
