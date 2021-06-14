@@ -13,5 +13,6 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         public T Context { get; }
         public V Receive();
         public Task<V> ReceiveAsync();
+        public void UseContext(T context);
     }
 }

@@ -17,6 +17,8 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         internal SocketSender(SocketContext context)
         {
             Context = context;
+            Socket = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
+            Socket.Bind(context.IPEndPoint);
         }
 
         public SocketContext Context { get; private set; }

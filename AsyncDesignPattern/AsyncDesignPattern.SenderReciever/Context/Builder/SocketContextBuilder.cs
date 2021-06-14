@@ -9,23 +9,26 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Context.Builder
 {
-    public class SocketContextBuilder : IContextBuilder<Socket>
+    public class SocketContextBuilder : IContextBuilder<SocketContext>
     {
-        private AddressFamily _addressFamily = AddressFamily.InterNetwork;
+        private AddressFamily _addressFamily { get; set; } = AddressFamily.InterNetwork;
         private SocketType _socketType = SocketType.Stream;
         private ProtocolType _protocolType = ProtocolType.Tcp;
         private IPEndPoint _iPEndPoint = new IPEndPoint(Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault(), 7777);
         private int _sendTimeout = 15;
-        private int _RecieveTimeout = 15;
+        public int _recieveTimeout = 15;
 
-        public Socket Build() 
+        public SocketContext Build() 
         {
-            var socket = new Socket(_addressFamily, _socketType, _protocolType);
-            socket.SendTimeout =_sendTimeout ;
-            socket.ReceiveTimeout = _sendTimeout;
-            socket.Bind(_iPEndPoint);
-
-            return socket;
+            return new SocketContext()
+            {
+                AddressFamily = _addressFamily,
+                SocketType = _socketType,
+                ProtocolType = _protocolType,
+                IPEndPoint = _iPEndPoint,
+                SendTimeout = _sendTimeout,
+                RecieveTimeout = _recieveTimeout
+            };
         }
 
         public SocketContextBuilder AddAddressFamily(AddressFamily addressFamily)
@@ -44,9 +47,9 @@ namespace AsyncDesignPattern.SenderReciever.Context.Builder
             return this;
         }
 
-        public SocketContextBuilder AddIpEndPoint(IPAddress address, int port)
+        public SocketContextBuilder AddIpEndPoint(IPEndPoint endPoint)
         {
-            _iPEndPoint = new IPEndPoint(address, port);
+            _iPEndPoint = endPoint;
             return this;
         }
 
@@ -57,7 +60,7 @@ namespace AsyncDesignPattern.SenderReciever.Context.Builder
         }
         public SocketContextBuilder AddIpRecieveTimeOut(int timeout)
         {
-            _RecieveTimeout = timeout;
+            _recieveTimeout = timeout;
             return this;
         }
 

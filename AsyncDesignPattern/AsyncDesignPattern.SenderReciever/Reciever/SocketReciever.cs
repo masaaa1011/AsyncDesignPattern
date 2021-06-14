@@ -16,13 +16,25 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
     {
         internal Socket Listener { get; set; }
         private Socket Handler { get; set; }
-        public SocketContext Context { get; private set; }
+        public SocketContext Context { get; internal set; }
 
         private const int BACK_LOG = 10;
-
+        public SocketReciever() { }
         public SocketReciever(SocketContext context)
         {
             Context = context;
+            Listener = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
+            Listener.Bind(context.IPEndPoint);
+
+            Listener.Listen(BACK_LOG);
+        }
+
+        public void UseContext(SocketContext context)
+        {
+            Context = context;
+            Listener = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
+            Listener.Bind(context.IPEndPoint);
+
             Listener.Listen(BACK_LOG);
         }
 
