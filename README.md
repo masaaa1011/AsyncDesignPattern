@@ -21,7 +21,8 @@
 サーバーのタスクの実行において非同期のデザインパターンを使用して実装してみましょう。<br>
 というスタンスです。
 
-通信はソケットで行っています。(自分の勉強用としてソケットを使用しています…コード量が増えてしまいましてすみません)
+通信はソケットで行っています。<br>
+(自分の勉強用としてソケットを使用しています…コード量が増えてしまいましてすみません)
 
 ## プロジェクト構成
 * AsyncDesignPattern.Client
@@ -29,7 +30,7 @@
   * Worker Serviceのプロジェクトです
 * AsyncDesignPattern.Server
   * サーバーのプロジェクトです 
-  * * Worker Serviceのプロジェクトです
+  * Worker Serviceのプロジェクトです
 * AsyncDesignPattern.SenderReciever
   * 通信のクライアント部分とリスナー部分のプロジェクトです
 * AsyncDesignPattern.TaskFamily
