@@ -1,6 +1,7 @@
 ﻿using AsyncDesignPattern.Common.Enum;
 using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Common.Enum;
+using AsyncDesignPattern.SenderReciever.Common.State;
 using AsyncDesignPattern.SenderReciever.Context;
 using System;
 using System.Collections.Generic;
@@ -8,17 +9,20 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Reciever
 {
     public class SocketReciever : IReciever<SocketContext, SocketToken>
     {
+        // Thread signal.  
+        public static ManualResetEvent allDone = new ManualResetEvent(false);
         internal Socket Listener { get; set; }
-        private Socket Handler { get; set; }
         public SocketContext Context { get; internal set; }
+        public SocketToken Token { get; private set; }
 
-        private const int BACK_LOG = 10;
+        private const int BACK_LOG = 150;
         public SocketReciever() { }
         public SocketReciever(SocketContext context)
         {
@@ -38,72 +42,104 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
             Listener.Listen(BACK_LOG);
         }
 
-        public SocketToken Receive()
+        public void ReceiveAsync()
         {
-            var buffer = GetNewBuffer();
+            allDone.Reset();
 
-            Handler = Listener.Accept();
-            var bytesRec = Handler.Receive(buffer);
-            var data1 = Encoding.UTF8.GetString(buffer, 0, bytesRec);
-            var msg = Encoding.UTF8.GetBytes(data1);
+            // Start an asynchronous socket to listen for connections.  
+            Console.WriteLine("Waiting for a connection...");
+            Listener.BeginAccept(
+                new AsyncCallback(AcceptCallback),
+                Listener);
 
-            Handler.Send(msg);
-
-            return (SocketToken)JsonSerializer.Deserialize(msg, new SocketToken().GetType());
+            // Wait until a connection is made before continuing.  
+            allDone.WaitOne();
         }
 
-        public async Task<SocketToken> ReceiveAsync(EventHandler<SocketAsyncEventArgs> callBack = null)
+        public static void AcceptCallback(IAsyncResult ar)
         {
-            callBack ??= DefaultCallBack;
-            EventArgs.Completed += callBack;
+            // Signal the main thread to continue.  
+            allDone.Set();
 
-            await Task.Run(() =>
-            {
-                Listener.AcceptAsync(EventArgs);
-                Listener.SendAsync(new SocketAsyncEventArgs() { 
-                    UserToken = new SocketToken() 
-                    { 
-                        Id = ((Guid)((SocketToken)EventArgs.UserToken).Id),
-                        DesingPatternType = ((DesingPatternType)((SocketToken)EventArgs.UserToken).DesingPatternType),
-                        StatusType = StatusCode.Success,
-                        Body = "response"
-                    }
-                });
-            });
+            // Get the socket that handles the client request.  
+            Socket listener = (Socket)ar.AsyncState;
+            Socket handler = listener.EndAccept(ar);
 
-            return (SocketToken)EventArgs.UserToken;
+            // Create the state object.  
+            SocketState state = new SocketState();
+            state.workSocket = handler;
+            handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
         }
 
-        public async Task<SocketToken> ReceiveAsync()
+        public static void ReadCallback(IAsyncResult ar)
         {
-            EventArgs.Completed += DefaultCallBack;
+            String content = String.Empty;
 
-            await Task.Run(() =>
+            // Retrieve the state object and the handler socket  
+            // from the asynchronous state object.  
+            SocketState state = (SocketState)ar.AsyncState;
+            Socket handler = state.workSocket;
+
+            // Read data from the client socket.
+            int bytesRead = handler.EndReceive(ar);
+
+            if (bytesRead > 0)
             {
-                Listener.AcceptAsync(EventArgs);
-                Listener.SendAsync(new SocketAsyncEventArgs()
+                // There  might be more data, so store the data received so far.  
+                state.sb.Append(Encoding.ASCII.GetString(
+                    state.buffer, 0, bytesRead));
+
+                // Check for end-of-file tag. If it is not there, read
+                // more data.  
+                content = state.sb.ToString();
+
+                var token = (SocketToken)JsonSerializer.Deserialize(content, typeof(SocketToken));
+                if (content.IndexOf("<EOF>") > -1)
                 {
-                    UserToken = new SocketToken()
-                    {
-                        Id = ((Guid)((SocketToken)EventArgs.UserToken).Id),
-                        DesingPatternType = ((DesingPatternType)((SocketToken)EventArgs.UserToken).DesingPatternType),
-                        StatusType = StatusCode.Success,
-                        Body = "response"
-                    }
-                });
-            });
-
-            return (SocketToken)EventArgs.UserToken;
+                    // All the data has been read from the
+                    // client. Display it on the console.  
+                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                        content.Length, content);
+                    // Echo the data back to the client.  
+                    Send(handler, content);
+                }
+                else
+                {
+                    // Not all data received. Get more.  
+                    handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+                    new AsyncCallback(ReadCallback), state);
+                }
+            }
         }
-
-
-        private SocketAsyncEventArgs EventArgs { get; set; } = new SocketAsyncEventArgs();
-
-        private EventHandler<SocketAsyncEventArgs> DefaultCallBack = (object o, SocketAsyncEventArgs e) =>
+        private static void Send(Socket handler, String data)
         {
-            Console.WriteLine(e.UserToken);
-        };
+            // Convert the string data to byte data using ASCII encoding.  
+            byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-        private byte[] GetNewBuffer() => new byte[1024];
+            // Begin sending the data to the remote device.  
+            handler.BeginSend(byteData, 0, byteData.Length, 0,
+                new AsyncCallback(SendCallback), handler);
+        }
+        private static void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.  
+                Socket handler = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.  
+                int bytesSent = handler.EndSend(ar);
+                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
     }
 }

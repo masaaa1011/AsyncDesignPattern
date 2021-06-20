@@ -8,6 +8,6 @@ namespace AsyncDesignPattern.SenderReciever.Common
 {
     public interface IHeader
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
     }
 }

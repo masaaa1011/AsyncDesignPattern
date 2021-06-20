@@ -10,14 +10,12 @@ namespace AsyncDesignPattern.TaskFamily.Controller
 {
     public class TaskHandler : ITaskHandler
     {
-        private readonly ITaskHandler _controller;
-
-        public TaskHandler(ITaskHandler controller)
+        public TaskHandler()
         {
-            _controller = controller;
+            
         }
 
-        public void Handle(ITask proccess)
+        public void Handle(ITask task)
         {
             throw new NotImplementedException();
         }

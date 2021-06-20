@@ -9,9 +9,11 @@ namespace AsyncDesignPattern.SenderReciever.Common.Enum
     public enum StatusCode
     {
         None = 0,
-        Success = 1,
-        Error = 2,
-        Wait = 3,
-        TimeOut = 4
+        Ask = 1,
+        Success = 2,
+        Completed = 3,
+        Error = 4,
+        Wait = 5,
+        TimeOut = 6
     }
 }

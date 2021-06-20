@@ -1,7 +1,9 @@
+using AsyncDesignPattern.Repository.Repository;
 using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Context;
 using AsyncDesignPattern.SenderReciever.Context.Builder;
 using AsyncDesignPattern.SenderReciever.Reciever;
+using AsyncDesignPattern.TaskFamily.Controller;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -37,7 +39,8 @@ namespace AsyncDesignPattern.Server
                                             .AddIpRecieveTimeOut(15)
                                             .Build());
                     });
-
+                    services.AddTransient<ITaskHandler, TaskHandler>()
+                            .AddTransient<IRepository, MockRecordRepository>();
                 });
     }
 }

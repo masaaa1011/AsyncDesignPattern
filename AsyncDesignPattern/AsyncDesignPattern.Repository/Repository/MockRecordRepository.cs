@@ -14,10 +14,10 @@ namespace AsyncDesignPattern.Repository.Repository
     {
         public MockRecordRepository()
         {
-            Entity = new MockEntity();
+            MockTable = new MockEntity();
         }
 
-        public MockEntity Entity { get; private set; }
+        public MockEntity MockTable { get; private set; }
 
         public void Add()
         {

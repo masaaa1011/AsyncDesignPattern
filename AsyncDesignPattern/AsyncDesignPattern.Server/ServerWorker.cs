@@ -1,6 +1,7 @@
 using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Context;
 using AsyncDesignPattern.SenderReciever.Reciever;
+using AsyncDesignPattern.TaskFamily.Controller;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,20 +16,30 @@ namespace AsyncDesignPattern.Server
     public class ServerWorker : BackgroundService
     {
         private readonly ILogger<ServerWorker> _logger;
-        private readonly SocketReciever _reciever;
+        private readonly IReciever<SocketContext, SocketToken> _reciever;
+        private readonly ITaskHandler _handler;
 
-        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever)
+        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever, ITaskHandler handler)
         {
             _logger = logger;
             _reciever = reciever.Value;
+            _handler = handler;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+                try
+                {
+                    _reciever.ReceiveAsync();
+                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogInformation(e.Message);
+                }
+                await Task.Delay(5000, stoppingToken);
             }
         }
     }

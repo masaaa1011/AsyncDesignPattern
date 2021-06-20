@@ -12,16 +12,17 @@ namespace AsyncDesignPattern.SenderReciever.Common
     {
         
         public SocketToken() { }
-        public SocketToken(Guid id, string body, DesingPatternType desingPatternType)
+        public SocketToken(Guid id, DesingPatternType desingPatternType, StatusCode statusCode, string body)
         {
             Id = id;
-            Body = body;
             DesingPatternType = desingPatternType;
+            StatusCode = statusCode;
+            Payload = body;
         }
 
-        public Guid Id { get; set; }
-        public DesingPatternType DesingPatternType { get; set; }
-        public StatusCode StatusType { get; set; }
-        public string Body { get; set; }
+        public Guid? Id { get; set; }
+        public DesingPatternType? DesingPatternType { get; set; }
+        public StatusCode? StatusCode { get; set; }
+        public string? Payload { get; set; }
     }
 }

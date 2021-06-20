@@ -11,11 +11,12 @@ namespace AsyncDesignPattern.SenderReciever.Common.Factory
 {
     public static class SocketTokenFactory
     {
-        public static SocketToken CreateToken(Guid id, object payload, DesingPatternType desingPatternType)
+        public static SocketToken CreateToken(Guid id, DesingPatternType desingPatternType, StatusCode statusCode, string payload)
             => new SocketToken(
                     id: id,
-                    body: JsonSerializer.Serialize(payload),
-                    desingPatternType: desingPatternType
+                    desingPatternType: desingPatternType,
+                    statusCode: statusCode,
+                    body: JsonSerializer.Serialize(payload)
                 );
     }
 }

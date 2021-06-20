@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AsyncDesignPattern.SenderReciever\AsyncDesignPattern.SenderReciever.csproj" />
+    <ProjectReference Include="..\AsyncDesignPattern.TaskFamily\AsyncDesignPattern.TaskFamily.csproj" />
   </ItemGroup>
 </Project>

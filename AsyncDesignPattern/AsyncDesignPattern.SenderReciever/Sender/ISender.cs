@@ -11,7 +11,8 @@ namespace AsyncDesignPattern.SenderReciever.Sender
     public interface ISender<T, V> where T : IContext where V : IToken
     {
         public T Context { get; }
-        public V Send(V token);
-        public Task<V> SendAsync(V token);
+        public V Token { get; }
+        public void SendAsync(V token);
+        public void UseContext(T context);
     }
 }
