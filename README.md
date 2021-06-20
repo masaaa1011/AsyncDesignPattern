@@ -33,17 +33,22 @@
   * Worker Serviceのプロジェクトです
 * AsyncDesignPattern.SenderReciever
   * 通信のクライアント部分とリスナー部分のプロジェクトです
+  * クラスライブラリです
 * AsyncDesignPattern.TaskFamily
   * Task処理に関するプロジェクトです
+  * クラスライブラリです
 * AsyncDesignPattern.Repository
   * リポジトリです。
   * .NET 5 からrecordという修飾子が追加されました。classやstructみたいなもので、Equalsの挙動が変わっています。(便利そうなので勉強用として入れ込んでいます)
+  * クラスライブラリです
 * AsyncDesignPattern.Common
-  * Commonです。
+  * Commonです
+  * クラスライブラリです
 
 * DesignPatternsフォルダ配下
   * ここには書くデザインパターンの実装プロジェクトが配置されています。
-  * 合計13のパターンの実装予定です。
+  * 合計13のパターンの実装予定です
+  * クラスライブラリです
 
 ---
 # 進め方
