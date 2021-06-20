@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Server",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncDesignPattern.Client", "AsyncDesignPattern.Client\AsyncDesignPattern.Client.csproj", "{E5A294D8-5360-413C-8155-51E4C35DBC0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncDesignPattern.Executor", "AsyncDesignPattern.Executor\AsyncDesignPattern.Executor.csproj", "{60461A22-7B77-4297-BEDB-D7C3E83B95F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,6 +205,14 @@ Global
 		{E5A294D8-5360-413C-8155-51E4C35DBC0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5A294D8-5360-413C-8155-51E4C35DBC0F}.Release|x86.ActiveCfg = Release|Any CPU
 		{E5A294D8-5360-413C-8155-51E4C35DBC0F}.Release|x86.Build.0 = Release|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{60461A22-7B77-4297-BEDB-D7C3E83B95F1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
