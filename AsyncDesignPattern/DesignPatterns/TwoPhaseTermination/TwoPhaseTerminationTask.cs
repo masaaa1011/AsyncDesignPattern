@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace TwoPhaseTermination
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class TwoPhaseTerminationTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute TwoPhaseTerminationTask");
         }
         public static void Main(string[] args)
         {

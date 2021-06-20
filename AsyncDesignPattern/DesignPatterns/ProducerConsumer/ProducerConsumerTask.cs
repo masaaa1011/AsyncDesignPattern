@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace ProducerConsumer
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class ProducerConsumerTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute ProducerConsumerTask");
         }
         public static void Main(string[] args)
         {

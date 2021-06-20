@@ -3,6 +3,7 @@ using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Common.Enum;
 using AsyncDesignPattern.SenderReciever.Common.State;
 using AsyncDesignPattern.SenderReciever.Context;
+using AsyncDesignPattern.TaskFamily.Controller;
 using AsyncDesignPattern.TaskFamily.TaskHub;
 using System;
 using System.Collections.Generic;
@@ -22,17 +23,23 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         internal Socket Listener { get; set; }
         public SocketContext Context { get; internal set; }
         public SocketToken Token { get; private set; }
-        private static ITaskHub taskHub { get; set; } = TaskHub.Create();
+        private static ITaskHandler _handler { get; set; }
 
         private const int BACK_LOG = 150;
         public SocketReciever() { }
-        public SocketReciever(SocketContext context)
+        public SocketReciever(SocketContext context, ITaskHandler handler)
         {
+            _handler = handler;
             Context = context;
             Listener = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
             Listener.Bind(context.IPEndPoint);
 
             Listener.Listen(BACK_LOG);
+        }
+
+        public void AddHandler(ITaskHandler handler)
+        {
+            _handler = handler;
         }
 
         public void UseContext(SocketContext context)
@@ -91,7 +98,7 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
 
-                    taskHub.Stack(
+                    _handler.Handle(
                             TaskFamily.TaskFactory.TaskFactory.Create(token.DesingPatternType.Value)
                         );
 

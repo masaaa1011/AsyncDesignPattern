@@ -9,5 +9,9 @@ namespace Balking
         {
             Console.WriteLine($"Task Execute BalkingTask");
         }
+        public static void Main(string[] args)
+        {
+
+        }
     }
 }

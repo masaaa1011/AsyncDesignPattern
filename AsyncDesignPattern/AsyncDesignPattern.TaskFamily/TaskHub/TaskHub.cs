@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.TaskFamily.TaskHub
 {
-    public class TaskHub : ITaskHub
+    internal class TaskHub : ITaskHub
     {
         private static readonly ITaskHub _instance = new TaskHub();
         public static ITaskHub Create() => _instance;

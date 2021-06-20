@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace ThreadPerMessage
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class ThreadPerMessageTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute ThreadPerMessageTask");
         }
         public static void Main(string[] args)
         {

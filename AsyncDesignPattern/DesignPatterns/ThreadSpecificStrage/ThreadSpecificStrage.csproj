@@ -3,5 +3,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -30,11 +30,12 @@ namespace AsyncDesignPattern.Server
                     services.AddHostedService<ServerWorker>();
                     services.Configure<SocketReciever>(option =>
                     {
+                        option.AddHandler(new TaskHandler());
                         option.UseContext(new SocketContextBuilder()
                                             .AddAddressFamily(AddressFamily.InterNetwork)
                                             .AddSocketType(SocketType.Stream)
                                             .AddProtocolType(ProtocolType.Tcp)
-                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5432))
+                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse("192.167.10.102"), 5432))
                                             .AddIpSendTimeOut(15)
                                             .AddIpRecieveTimeOut(15)
                                             .Build());

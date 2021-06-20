@@ -9,5 +9,10 @@ namespace ActiveObject
         {
             Console.WriteLine($"Task Execute ActiveObjectTask");
         }
+
+        public static void Main(string[] args)
+        {
+
+        }
     }
 }

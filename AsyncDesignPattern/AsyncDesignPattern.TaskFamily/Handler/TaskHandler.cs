@@ -1,5 +1,6 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using AsyncDesignPattern.Repository.Repository;
+using AsyncDesignPattern.TaskFamily.TaskHub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace AsyncDesignPattern.TaskFamily.Controller
 {
     public class TaskHandler : ITaskHandler
     {
+        private ITaskHub _taskHub { get; set; } = TaskHub.TaskHub.Create();
         public TaskHandler()
         {
             
@@ -17,7 +19,7 @@ namespace AsyncDesignPattern.TaskFamily.Controller
 
         public void Handle(ITask task)
         {
-            throw new NotImplementedException();
+            _taskHub.Stack(task);
         }
     }
 }

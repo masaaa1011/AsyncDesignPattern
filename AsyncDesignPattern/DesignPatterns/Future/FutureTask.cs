@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace Future
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class FutureTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute FutureTask");
         }
         public static void Main(string[] args)
         {

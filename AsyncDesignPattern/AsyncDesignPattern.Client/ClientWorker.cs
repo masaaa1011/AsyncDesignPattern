@@ -38,7 +38,7 @@ namespace AsyncDesignPattern.Client
                     _sender.SendAsync(
                         SocketTokenFactory.CreateToken(
                             id: Guid.NewGuid(),
-                            desingPatternType: DesingPatternType.SingleThreadedExecution, 
+                            desingPatternType: DesingPatternType.Balking, 
                             statusCode: StatusCode.Ask, 
                             payload: "this is message from client"));
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

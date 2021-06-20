@@ -7,7 +7,11 @@ namespace Immutable
     {
         public void ExecuteAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Task Execute ImmutableTask");
+        }
+        public static void Main(string[] args)
+        {
+
         }
     }
 }

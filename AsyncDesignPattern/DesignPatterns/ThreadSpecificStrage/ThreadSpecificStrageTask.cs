@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace ThreadSpecificStrage
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class ThreadSpecificStrageTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute ThreadSpecificStrageTask");
         }
         public static void Main(string[] args)
         {

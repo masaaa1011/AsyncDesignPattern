@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace SingleThreadedExecution
+namespace ReadWriteLock
 {
-    public class SingleThreadedExecutionTask : ITask
+    public class ReadWriteLockTask : ITask
     {
         public void ExecuteAsync()
         {
-            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
+            Console.WriteLine($"Task Execute ReadWriteLockTask");
         }
         public static void Main(string[] args)
         {
