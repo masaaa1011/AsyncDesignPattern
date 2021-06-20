@@ -1,4 +1,4 @@
-﻿using AsyncDesignPattern.Common.Proccess;
+﻿using AsyncDesignPattern.Common.Task;
 using System;
 
 namespace SingleThreadedExecution
@@ -7,7 +7,7 @@ namespace SingleThreadedExecution
     {
         public void ExecuteAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Task Execute SingleThreadedExecutionTask");
         }
     }
 }

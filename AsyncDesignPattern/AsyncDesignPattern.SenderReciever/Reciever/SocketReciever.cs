@@ -3,6 +3,7 @@ using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Common.Enum;
 using AsyncDesignPattern.SenderReciever.Common.State;
 using AsyncDesignPattern.SenderReciever.Context;
+using AsyncDesignPattern.TaskFamily.TaskHub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         internal Socket Listener { get; set; }
         public SocketContext Context { get; internal set; }
         public SocketToken Token { get; private set; }
+        private static ITaskHub taskHub { get; set; } = TaskHub.Create();
 
         private const int BACK_LOG = 150;
         public SocketReciever() { }
@@ -46,26 +48,21 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         {
             allDone.Reset();
 
-            // Start an asynchronous socket to listen for connections.  
             Console.WriteLine("Waiting for a connection...");
             Listener.BeginAccept(
                 new AsyncCallback(AcceptCallback),
                 Listener);
 
-            // Wait until a connection is made before continuing.  
             allDone.WaitOne();
         }
 
         public static void AcceptCallback(IAsyncResult ar)
         {
-            // Signal the main thread to continue.  
             allDone.Set();
 
-            // Get the socket that handles the client request.  
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
 
-            // Create the state object.  
             SocketState state = new SocketState();
             state.workSocket = handler;
             handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
@@ -76,37 +73,32 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         {
             String content = String.Empty;
 
-            // Retrieve the state object and the handler socket  
-            // from the asynchronous state object.  
             SocketState state = (SocketState)ar.AsyncState;
             Socket handler = state.workSocket;
 
-            // Read data from the client socket.
             int bytesRead = handler.EndReceive(ar);
 
             if (bytesRead > 0)
             {
-                // There  might be more data, so store the data received so far.  
                 state.sb.Append(Encoding.ASCII.GetString(
                     state.buffer, 0, bytesRead));
 
-                // Check for end-of-file tag. If it is not there, read
-                // more data.  
                 content = state.sb.ToString();
-
                 var token = (SocketToken)JsonSerializer.Deserialize(content, typeof(SocketToken));
-                if (content.IndexOf("<EOF>") > -1)
+
+                if (!string.IsNullOrEmpty(token.EOF))
                 {
-                    // All the data has been read from the
-                    // client. Display it on the console.  
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
-                    // Echo the data back to the client.  
+
+                    taskHub.Stack(
+                            TaskFamily.TaskFactory.TaskFactory.Create(token.DesingPatternType.Value)
+                        );
+
                     Send(handler, content);
                 }
                 else
                 {
-                    // Not all data received. Get more.  
                     handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
@@ -114,10 +106,8 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         }
         private static void Send(Socket handler, String data)
         {
-            // Convert the string data to byte data using ASCII encoding.  
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.  
             handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
         }
@@ -125,16 +115,13 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         {
             try
             {
-                // Retrieve the socket from the state object.  
                 Socket handler = (Socket)ar.AsyncState;
 
-                // Complete sending the data to the remote device.  
                 int bytesSent = handler.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();
-
             }
             catch (Exception e)
             {

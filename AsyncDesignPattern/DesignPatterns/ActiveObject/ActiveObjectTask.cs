@@ -1,4 +1,4 @@
-﻿using AsyncDesignPattern.Common.Proccess;
+﻿using AsyncDesignPattern.Common.Task;
 using System;
 
 namespace ActiveObject
@@ -7,7 +7,7 @@ namespace ActiveObject
     {
         public void ExecuteAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Task Execute ActiveObjectTask");
         }
     }
 }

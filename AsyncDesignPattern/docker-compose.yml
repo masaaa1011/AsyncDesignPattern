@@ -5,4 +5,26 @@ services:
     image: ${DOCKER_REGISTRY-}asyncdesignpatternclient
     build:
       context: .
-      dockerfile: Client/Dockerfile
+      dockerfile: AsyncDesignPattern.Client/Dockerfile
+    networks:
+         - asyncstudynetwork
+    depends_on:
+        - asyncdesignpattern.server
+
+  asyncdesignpattern.server:
+    image: ${DOCKER_REGISTRY-}asyncdesignpatternserver
+    build:
+      context: .
+      dockerfile: AsyncDesignPattern.Server/Dockerfile
+    networks:
+         - asyncstudynetwork
+    expose:
+        - 5432
+
+networks:
+  asyncstudynetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.167.10.0/24

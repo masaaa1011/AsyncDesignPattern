@@ -1,4 +1,4 @@
-﻿using AsyncDesignPattern.Common.Proccess;
+﻿using AsyncDesignPattern.Common.Task;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +9,8 @@ namespace AsyncDesignPattern.TaskFamily.TaskHub
     {
         Queue<ITask> ProccessCollection { get; }
         virtual void Start() { }
-        public void Stack(ITask proccess) { 
-            ProccessCollection.Enqueue(proccess);
+        public void Stack(ITask task) { 
+            ProccessCollection.Enqueue(task);
             Start();
         }
     }

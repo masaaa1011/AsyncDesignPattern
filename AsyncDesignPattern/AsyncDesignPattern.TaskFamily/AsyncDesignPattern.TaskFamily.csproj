@@ -12,8 +12,18 @@
   <ItemGroup>
     <ProjectReference Include="..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
     <ProjectReference Include="..\AsyncDesignPattern.Repository\AsyncDesignPattern.Repository.csproj" />
+    <ProjectReference Include="..\DesignPatterns\ActiveObject\ActiveObject.csproj" />
+    <ProjectReference Include="..\DesignPatterns\Balking\Balking.csproj" />
+    <ProjectReference Include="..\DesignPatterns\Future\Future.csproj" />
+    <ProjectReference Include="..\DesignPatterns\GuardedSuspention\GuardedSuspention.csproj" />
     <ProjectReference Include="..\DesignPatterns\Immutable\Immutable.csproj" />
+    <ProjectReference Include="..\DesignPatterns\ProducerConsumer\ProducerConsumer.csproj" />
+    <ProjectReference Include="..\DesignPatterns\ReadWriteLock\ReadWriteLock.csproj" />
     <ProjectReference Include="..\DesignPatterns\SingleThreadedExecution\SingleThreadedExecution.csproj" />
+    <ProjectReference Include="..\DesignPatterns\ThreadPerMessage\ThreadPerMessage.csproj" />
+    <ProjectReference Include="..\DesignPatterns\ThreadSpecificStrage\ThreadSpecificStrage.csproj" />
+    <ProjectReference Include="..\DesignPatterns\TwoPhaseTermination\TwoPhaseTermination.csproj" />
+    <ProjectReference Include="..\DesignPatterns\WorkerThread\WorkerThread.csproj" />
   </ItemGroup>
 
 </Project>

@@ -35,8 +35,7 @@ namespace AsyncDesignPattern.Client
             {
                 try
                 {
-                    //Console.ReadKey();
-                    await _sender.SendAsync(
+                    _sender.SendAsync(
                         SocketTokenFactory.CreateToken(
                             id: Guid.NewGuid(),
                             desingPatternType: DesingPatternType.SingleThreadedExecution, 

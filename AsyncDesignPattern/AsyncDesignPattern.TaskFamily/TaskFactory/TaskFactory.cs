@@ -1,5 +1,7 @@
-﻿using AsyncDesignPattern.Common.Enum;
-using AsyncDesignPattern.Common.Proccess;
+﻿using ActiveObject;
+using AsyncDesignPattern.Common.Enum;
+using AsyncDesignPattern.Common.Task;
+using Balking;
 using Immutable;
 using SingleThreadedExecution;
 using System;
@@ -16,6 +18,8 @@ namespace AsyncDesignPattern.TaskFamily.TaskFactory
         {
             DesingPatternType.SingleThreadedExecution => new SingleThreadedExecutionTask(),
             DesingPatternType.Immutable => new ImmutableTask(),
+            DesingPatternType.ActiveObject => new ActiveObjectTask(),
+            DesingPatternType.Balking => new BalkingTask(),
             _ => throw new Exception()
         };
     }

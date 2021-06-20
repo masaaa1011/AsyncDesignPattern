@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AsyncDesignPattern.Common.Proccess
+namespace AsyncDesignPattern.Common.Task
 {
     public interface ITask
     {

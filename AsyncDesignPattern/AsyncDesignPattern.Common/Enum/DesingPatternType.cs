@@ -10,6 +10,7 @@ namespace AsyncDesignPattern.Common.Enum
     {
         SingleThreadedExecution = 1,
         Immutable = 2,
+        Balking = 3,
         ActiveObject = 12
     }
 }

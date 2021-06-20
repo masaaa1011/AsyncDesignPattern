@@ -1,13 +1,13 @@
 ﻿using AsyncDesignPattern.Common.Task;
 using System;
 
-namespace Immutable
+namespace Balking
 {
-    public class ImmutableTask : ITask
+    public class BalkingTask : ITask
     {
         public void ExecuteAsync()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Task Execute BalkingTask");
         }
     }
 }
