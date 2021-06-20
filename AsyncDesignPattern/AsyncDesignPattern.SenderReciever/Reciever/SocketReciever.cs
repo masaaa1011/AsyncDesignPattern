@@ -18,7 +18,7 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
 {
     public class SocketReciever : IReciever<SocketContext, SocketToken>
     {
-        // Thread signal.  
+        // hack: 以下のThread signalオブジェクトをstaticではない実装にした方がよい
         public static ManualResetEvent allDone = new ManualResetEvent(false);
         internal Socket Listener { get; set; }
         public SocketContext Context { get; internal set; }

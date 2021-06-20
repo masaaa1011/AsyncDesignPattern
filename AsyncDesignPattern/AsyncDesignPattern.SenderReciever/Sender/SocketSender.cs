@@ -20,6 +20,8 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         public SocketContext Context { get; private set; }
         public SocketToken Token { get; private set; }
 
+        // hack: 以下のThread signalオブジェクトをstaticではない実装にした方がよい
+
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
