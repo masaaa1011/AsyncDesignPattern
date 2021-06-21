@@ -1,4 +1,6 @@
 ﻿using AsyncDesignPattern.Common.Task;
+using AsyncDesignPattern.TaskFamily.Contracts;
+using AsyncDesignPattern.TaskFamily.TaskHub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,10 @@ namespace AsyncDesignPattern.TaskFamily.Controller
 {
     public interface ITaskHandler
     {
+        ITaskHub TaskHub { get; }
+        ISurveillanceCollection SurveillanceCollection { get; }
+
         void Handle(ITask proccess);
+        ITaskHandler AddSurveillance(ISurveillance surveillance);
     }
 }

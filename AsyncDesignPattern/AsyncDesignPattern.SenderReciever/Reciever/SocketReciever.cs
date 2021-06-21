@@ -3,6 +3,7 @@ using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Common.Enum;
 using AsyncDesignPattern.SenderReciever.Common.State;
 using AsyncDesignPattern.SenderReciever.Context;
+using AsyncDesignPattern.TaskFamily.Contracts;
 using AsyncDesignPattern.TaskFamily.Controller;
 using AsyncDesignPattern.TaskFamily.TaskHub;
 using System;
@@ -23,13 +24,13 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
         internal Socket Listener { get; set; }
         public SocketContext Context { get; internal set; }
         public SocketToken Token { get; private set; }
-        private static ITaskHandler _handler { get; set; }
+        public static ITaskHandler Handler { get; private set; }
 
         private const int BACK_LOG = 150;
         public SocketReciever() { }
         public SocketReciever(SocketContext context, ITaskHandler handler)
         {
-            _handler = handler;
+            Handler = handler;
             Context = context;
             Listener = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
             Listener.Bind(context.IPEndPoint);
@@ -37,9 +38,10 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
             Listener.Listen(BACK_LOG);
         }
 
-        public void AddHandler(ITaskHandler handler)
+        public ITaskHandler AddHandler(ITaskHandler handler)
         {
-            _handler = handler;
+            Handler = handler;
+            return Handler;
         }
 
         public void UseContext(SocketContext context)
@@ -98,7 +100,7 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
 
-                    _handler.Handle(
+                    Handler.Handle(
                             TaskFamily.TaskFactory.TaskFactory.Create(token.DesingPatternType.Value)
                         );
 

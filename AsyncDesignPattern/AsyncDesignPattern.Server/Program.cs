@@ -3,6 +3,7 @@ using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Context;
 using AsyncDesignPattern.SenderReciever.Context.Builder;
 using AsyncDesignPattern.SenderReciever.Reciever;
+using AsyncDesignPattern.TaskFamily.Contracts;
 using AsyncDesignPattern.TaskFamily.Controller;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,12 +31,15 @@ namespace AsyncDesignPattern.Server
                     services.AddHostedService<ServerWorker>();
                     services.Configure<SocketReciever>(option =>
                     {
-                        option.AddHandler(new TaskHandler());
+                        option.AddHandler(new TaskHandler())
+                              .AddSurveillance(new MemorySurveillance());
+
                         option.UseContext(new SocketContextBuilder()
                                             .AddAddressFamily(AddressFamily.InterNetwork)
                                             .AddSocketType(SocketType.Stream)
                                             .AddProtocolType(ProtocolType.Tcp)
-                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse("192.167.10.102"), 5432))
+                                            //.AddIpEndPoint(new IPEndPoint(IPAddress.Parse("192.167.10.102"), 5432))
+                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5432))
                                             .AddIpSendTimeOut(15)
                                             .AddIpRecieveTimeOut(15)
                                             .Build());

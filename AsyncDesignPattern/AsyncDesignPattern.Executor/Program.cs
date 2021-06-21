@@ -1,4 +1,5 @@
 using AsyncDesignPattern.Repository.Repository;
+using AsyncDesignPattern.TaskFamily.Contracts;
 using AsyncDesignPattern.TaskFamily.Controller;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,8 +22,12 @@ namespace AsyncDesignPattern.Executor
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>()
-                            .AddTransient<ITaskHandler, TaskHandler>()
                             .AddTransient<IRepository, MockRecordRepository>();
+
+                    services.Configure<TaskHandler>(option =>
+                    {
+                        option.AddSurveillance(new MemorySurveillance());
+                    });
                 });
     }
 }

@@ -1,6 +1,7 @@
 using AsyncDesignPattern.TaskFamily.Controller;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,12 @@ namespace AsyncDesignPattern.Executor
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly ITaskHandler _handler;
+        private readonly TaskHandler _handler;
 
-        public Worker(ILogger<Worker> logger, ITaskHandler handler)
+        public Worker(ILogger<Worker> logger, IOptions<TaskHandler> handler)
         {
             _logger = logger;
-            _handler = handler;
+            _handler = handler.Value;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

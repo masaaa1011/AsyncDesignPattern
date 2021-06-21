@@ -11,25 +11,36 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.TaskFamily.Controller
 {
-    public class TaskHandler : ITaskHandler, ISurveillance
+    public class TaskHandler : ITaskHandler
     {
-        private ITaskHub _taskHub { get; set; } = TaskHub.TaskHub.Create();
+        public ITaskHub TaskHub { get; private set; } = TaskFamily.TaskHub.TaskHub.Create();
+        public ISurveillanceCollection SurveillanceCollection { get; set; } = new SurveillanceCollection();
+
         public TaskHandler()
         {
-            
+        }
+
+        public TaskHandler(ISurveillanceCollection surveillanceCollection)
+        {
+            SurveillanceCollection = surveillanceCollection;
         }
 
         public void Handle(ITask task)
         {
             var tokenSource = new CancellationTokenSource();
-            Invaritant(() => { return Require(); }, tokenSource);
-            if (!Require()) throw new Exception("invalid state");
+            SurveillanceCollection.survices.ForEach(f => { if(f.Require()) Console.WriteLine("not valid state"); });
+            SurveillanceCollection.survices.ForEach(f => { Invaritant(() => { return Require(); }, tokenSource); });
 
-            _taskHub.Stack(task);
+            TaskHub.Stack(task);
 
-
-            if (!Ensure()) throw new Exception("invalid state");
+            SurveillanceCollection.survices.ForEach(f => { if (f.Ensure()) Console.WriteLine("not valid state"); });
             tokenSource.Cancel();
+        }
+
+        public ITaskHandler AddSurveillance(ISurveillance surveillance)
+        {
+            SurveillanceCollection.AddSurveillance(surveillance);
+            return this;
         }
 
         public bool Require()

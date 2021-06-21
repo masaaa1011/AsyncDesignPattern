@@ -17,13 +17,11 @@ namespace AsyncDesignPattern.Server
     {
         private readonly ILogger<ServerWorker> _logger;
         private readonly IReciever<SocketContext, SocketToken> _reciever;
-        private readonly ITaskHandler _handler;
 
-        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever, ITaskHandler handler)
+        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever)
         {
             _logger = logger;
             _reciever = reciever.Value;
-            _handler = handler;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
