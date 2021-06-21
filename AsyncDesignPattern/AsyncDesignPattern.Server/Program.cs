@@ -31,9 +31,7 @@ namespace AsyncDesignPattern.Server
                     services.AddHostedService<ServerWorker>();
                     services.Configure<SocketReciever>(option =>
                     {
-                        option.AddHandler(new TaskHandler())
-                              .AddSurveillance(new MemorySurveillance());
-
+                        option.AddHandler(new TaskHandler(new List<ISurveillance> { new MemorySurveillance() }));
                         option.UseContext(new SocketContextBuilder()
                                             .AddAddressFamily(AddressFamily.InterNetwork)
                                             .AddSocketType(SocketType.Stream)

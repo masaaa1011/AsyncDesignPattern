@@ -8,11 +8,11 @@ namespace AsyncDesignPattern.TaskFamily.Contracts
 {
     public class SurveillanceCollection : ISurveillanceCollection
     {
-        public List<ISurveillance> survices { get; private set; } = new List<ISurveillance>();
+        public List<ISurveillance> Surveillances { get; private set; } = new List<ISurveillance>();
 
         public ISurveillanceCollection AddSurveillance(ISurveillance surveillance)
         {
-            survices.Add(surveillance);
+            Surveillances.Add(surveillance);
             return this;
         }
     }

@@ -12,9 +12,6 @@ namespace AsyncDesignPattern.TaskFamily.Controller
     public interface ITaskHandler
     {
         ITaskHub TaskHub { get; }
-        ISurveillanceCollection SurveillanceCollection { get; }
-
         void Handle(ITask proccess);
-        ITaskHandler AddSurveillance(ISurveillance surveillance);
     }
 }

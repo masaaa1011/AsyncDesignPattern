@@ -8,7 +8,7 @@ namespace AsyncDesignPattern.TaskFamily.Contracts
 {
     public interface ISurveillanceCollection
     {
-        public List<ISurveillance> survices { get; }
+        public List<ISurveillance> Surveillances { get; }
         public ISurveillanceCollection AddSurveillance(ISurveillance surveillance);
     }
 }
