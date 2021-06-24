@@ -10,13 +10,15 @@
 # 環境について
 ## 動作環境
 * docker runtime(dockerで動かしたい人だけ)
-* .NET 6
+* .NET 6(sdk入れるのがめんどくさい人はバージョン下げても大丈夫です。多分動きます。)
 ## 使用ツール
-* visual studio (バージョンはなんでもよいですが、2022preview版だと.NET6のランタイムが初めから入っています)
-* docker desktop(composeが使えればよいです)
+* visual studio (バージョンはなんでもよいですが、2022preview版だと.NET6のランタイムが初めから入っています。あとコンテナツール便利です。)
+* docker desktop(composeが使えればよいです。)
 
 ---
 # 準備してほしいもの
+* gitアカウント
+  * Forkして使っていただこうかと考えています。ブランチここに作っちゃってもよいです。
 * Docker Desktopのインストール
   * あってもなくてもどっちでもよいですが、コンテナで実行したい人は是非
   * https://www.docker.com/products/docker-desktop
