@@ -20,7 +20,7 @@
 * gitアカウント
   * Forkして使っていただこうかと考えています。めんどくさければブランチここに作っちゃってもよいです。
 * Docker Desktopのインストール
-  * あってもなくてもどっちでもよいですが、コンテナで実行したい人は是非
+  * あってもなくてもどっちでもよいですが、コンテナで実行したい人はあると楽です。
   * https://www.docker.com/products/docker-desktop
 * visual sutdio preview機能の有効化
   * .NET　6で動かすために必要です。(Use Preview of .NET Core)
