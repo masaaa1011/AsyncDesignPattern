@@ -88,7 +88,6 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
             var handler = (SocketRecieverSet)state.workSocket;
 
             int bytesRead = handler.Socket.EndReceive(ar);
-
             if (bytesRead > 0)
             {
                 state.sb.Append(Encoding.ASCII.GetString(
@@ -99,10 +98,9 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
 
                 if (!string.IsNullOrEmpty(token.EOF))
                 {
-                    var _content = (SocketToken)JsonSerializer.Deserialize(state.sb.ToString(), typeof(SocketToken));
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
-                    Console.WriteLine(_content.Payload??= "null");
+                    Console.WriteLine($"id: {token.Id} / payload: {token.Payload}");
 
                     Handler.Handle(
                             TaskFamily.TaskFactory.TaskFactory.Create(token.DesingPatternType.Value)
