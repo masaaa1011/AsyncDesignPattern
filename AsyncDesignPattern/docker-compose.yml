@@ -20,7 +20,7 @@ services:
     networks:
          asyncstudynetwork:
             ipv4_address: 192.167.10.102
-    expose:
+    ports:
         - 5432
 
 networks:

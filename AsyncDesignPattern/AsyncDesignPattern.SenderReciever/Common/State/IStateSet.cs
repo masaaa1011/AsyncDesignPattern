@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Common.State
 {
-    public interface IState
+    public interface IStateSet
     {
     }
 }

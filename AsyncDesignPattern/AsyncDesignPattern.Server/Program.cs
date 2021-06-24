@@ -28,22 +28,33 @@ namespace AsyncDesignPattern.Server
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    var _config = hostContext.Configuration.GetSection("SocketContext");
+                    var config = new
+                    {
+                        AddressFamily = _config["AddressFamily"],
+                        SocketType = _config["SocketType"],
+                        ProtocolType = _config["ProtocolType"],
+                        IPAddress = Environment.MachineName.Equals(hostContext.Configuration.GetSection("Host").GetChildren().FirstOrDefault().Value) ? _config["LocalIPAddress"] : _config["IPAddress"],
+                        Port = _config["Port"],
+                        SendTimeOut = _config["SendTimeOut"],
+                        RecieveTimeOut = _config["RecieveTimeOut"],
+                    };
+
                     services.AddHostedService<ServerWorker>();
                     services.Configure<SocketReciever>(option =>
                     {
                         option.AddHandler(new TaskHandler(new List<ISurveillance> { new MemorySurveillance() }));
                         option.UseContext(new SocketContextBuilder()
-                                            .AddAddressFamily(AddressFamily.InterNetwork)
-                                            .AddSocketType(SocketType.Stream)
-                                            .AddProtocolType(ProtocolType.Tcp)
-                                            //.AddIpEndPoint(new IPEndPoint(IPAddress.Parse("192.167.10.102"), 5432))
-                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5432))
-                                            .AddIpSendTimeOut(15)
-                                            .AddIpRecieveTimeOut(15)
+                                            .AddAddressFamily(Enum.Parse<AddressFamily>(config.AddressFamily))
+                                            .AddSocketType(Enum.Parse<SocketType>(config.SocketType))
+                                            .AddProtocolType(Enum.Parse<ProtocolType>(config.ProtocolType))
+                                            .AddIpEndPoint(new IPEndPoint(IPAddress.Parse(config.IPAddress), int.Parse(config.Port)))
+                                            .AddIpSendTimeOut(int.Parse(config.SendTimeOut))
+                                            .AddIpRecieveTimeOut(int.Parse(config.RecieveTimeOut))
                                             .Build());
                     });
-                    services.AddTransient<ITaskHandler, TaskHandler>()
-                            .AddTransient<IRepository, MockRecordRepository>();
+
+                    services.AddTransient<IRepository, MockRecordRepository>();
                 });
     }
 }

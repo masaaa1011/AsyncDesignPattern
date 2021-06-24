@@ -21,7 +21,6 @@ namespace AsyncDesignPattern.Client
     {
         private readonly ILogger<ClientWorker> _logger;
         private readonly ISender<SocketContext, SocketToken> _sender;
-        private readonly ITaskHandler _handler;
 
         public ClientWorker(ILogger<ClientWorker> logger, IOptions<SocketSender> sender)
         {

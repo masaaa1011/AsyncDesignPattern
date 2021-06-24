@@ -12,22 +12,22 @@ namespace AsyncDesignPattern.TaskFamily.TaskHub
         public static ITaskHub Create() => _instance;
         private TaskHub() 
         {
-            ProccessCollection = new Queue<ITask>();
-            Start();
+            TaskCollection = new Queue<ITask>();
+            Task.Run(() => { Start(); });
         }
-        public Queue<ITask> ProccessCollection { get; private set; }
-        private async void Start()
+        public Queue<ITask> TaskCollection { get; private set; }
+        public async void Start()
         {
             while (true)
             {
                 try
                 {
-                    if(ProccessCollection.Count > 0)
+                    if(TaskCollection.Count > 0)
                     {
                         Console.WriteLine($"task execute...");
                         await Task.Run(() =>
                         {
-                            ProccessCollection.Dequeue().ExecuteAsync();
+                            TaskCollection.Dequeue().ExecuteAsync();
                         });
                     }
                     else
@@ -46,7 +46,7 @@ namespace AsyncDesignPattern.TaskFamily.TaskHub
 
         public void Stack(ITask task)
         {
-            ProccessCollection.Enqueue(task);
+            TaskCollection.Enqueue(task);
         }
     }
 }

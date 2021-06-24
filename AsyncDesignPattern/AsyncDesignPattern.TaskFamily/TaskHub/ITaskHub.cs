@@ -7,10 +7,10 @@ namespace AsyncDesignPattern.TaskFamily.TaskHub
 {
     public interface ITaskHub
     {
-        Queue<ITask> ProccessCollection { get; }
+        Queue<ITask> TaskCollection { get; }
         virtual void Start() { }
         public void Stack(ITask task) { 
-            ProccessCollection.Enqueue(task);
+            TaskCollection.Enqueue(task);
             Start();
         }
     }

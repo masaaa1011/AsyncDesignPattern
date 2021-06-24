@@ -10,4 +10,8 @@
     <ProjectReference Include="..\AsyncDesignPattern.TaskFamily\AsyncDesignPattern.TaskFamily.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Connection\" />
+  </ItemGroup>
+
 </Project>

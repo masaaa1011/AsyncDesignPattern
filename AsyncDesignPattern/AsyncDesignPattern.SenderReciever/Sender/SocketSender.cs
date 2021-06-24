@@ -22,10 +22,6 @@ namespace AsyncDesignPattern.SenderReciever.Sender
 
         // hack: 以下のThread signalオブジェクトをstaticではない実装にした方がよい
 
-        private static ManualResetEvent connectDone = new ManualResetEvent(false);
-        private static ManualResetEvent sendDone = new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone = new ManualResetEvent(false);
-        // The response from the remote device.  
         private static String response = String.Empty;
 
         public SocketSender() { }
@@ -40,6 +36,7 @@ namespace AsyncDesignPattern.SenderReciever.Sender
             Context = context;
             Socket = new Socket(context.AddressFamily, context.SocketType, context.ProtocolType) { SendTimeout = context.SendTimeout, ReceiveTimeout = context.RecieveTimeout };
         }
+
         public SocketToken Send(SocketToken token)
         {
             Socket.Connect(Context.IPEndPoint);
@@ -55,19 +52,18 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         {
             try
             {
-                var client = new Socket(Context.AddressFamily, Context.SocketType, Context.ProtocolType);
-
-                client.BeginConnect(Context.IPEndPoint,
+                var client = SocketSenderSet.Create(Context);
+                client.Socket.BeginConnect(Context.IPEndPoint,
                     new AsyncCallback(ConnectCallback), client);
-                connectDone.WaitOne();
 
+                client.connectDone.WaitOne();
                 Send(client, JsonSerializer.Serialize(token));
-                sendDone.WaitOne();
+                client.sendDone.WaitOne();
 
                 Receive(client);
-                receiveDone.WaitOne();
+                client.receiveDone.WaitOne();
 
-                Console.WriteLine("Response received : {0}", response);
+                Console.WriteLine("Response received : {0}", client.Token.Payload??= "null");
 
                 //hack: socketのインスタンスをdisposeしてもイベントハンドラ内でアクセスをしてしまう。
                 //undone: イベントハンドラにてdisposeされたsocketにアクセスしないように実装する必要がある
@@ -83,11 +79,11 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         {
             try
             {
-                var client = (Socket)ar.AsyncState;
-                client.EndConnect(ar);
+                var client = (SocketSenderSet)ar.AsyncState;
+                client.Socket.EndConnect(ar);
                 Console.WriteLine("Socket connected to {0}",
-                    client.RemoteEndPoint.ToString());
-                connectDone.Set();
+                    client.Socket.RemoteEndPoint.ToString());
+                client.connectDone.Set();
             }
             catch (Exception e)
             {
@@ -95,14 +91,14 @@ namespace AsyncDesignPattern.SenderReciever.Sender
             }
         }
 
-        private static void Receive(Socket client)
+        private static void Receive(SocketSenderSet client)
         {
             try
             {
-                var state = new SocketState();
+                var state = new SocketStateBase();
                 state.workSocket = client;
 
-                client.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+                client.Socket.BeginReceive(state.buffer, 0, SocketStateBase.BufferSize, 0,
                     new AsyncCallback(ReceiveCallback), state);
             }
             catch (Exception e)
@@ -115,25 +111,25 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         {
             try
             {
-                var state = (SocketState)ar.AsyncState;
-                var client = state.workSocket;
+                var state = (SocketStateBase)ar.AsyncState;
+                var client = (SocketSenderSet)state.workSocket;
 
-                int bytesRead = client.EndReceive(ar);
+                int bytesRead = client.Socket.EndReceive(ar);
 
                 if (bytesRead > 0)
                 {
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                    client.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+                    client.Socket.BeginReceive(state.buffer, 0, SocketStateBase.BufferSize, 0,
                         new AsyncCallback(ReceiveCallback), state);
                 }
                 else
                 {
                     if (state.sb.Length > 1)
                     {
-                        response = state.sb.ToString();
+                        client.Token = (SocketToken)JsonSerializer.Deserialize(state.sb.ToString(), typeof(SocketToken));
                     }
-                    receiveDone.Set();
+                    client.receiveDone.Set();
                 }
             }
             catch (Exception e)
@@ -142,10 +138,10 @@ namespace AsyncDesignPattern.SenderReciever.Sender
             }
         }
 
-        private static void Send(Socket client, string data)
+        private static void Send(SocketSenderSet client, string data)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(data);
-            client.BeginSend(byteData, 0, byteData.Length, 0,
+            client.Socket.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), client);
         }
 
@@ -153,11 +149,11 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         {
             try
             {
-                var client = (Socket)ar.AsyncState;
-                int bytesSent = client.EndSend(ar);
+                var client = (SocketSenderSet)ar.AsyncState;
+                int bytesSent = client.Socket.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
-                sendDone.Set();
+                client.sendDone.Set();
             }
             catch (Exception e)
             {

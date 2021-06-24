@@ -16,7 +16,7 @@ namespace AsyncDesignPattern.SenderReciever.Context.Builder
         private ProtocolType _protocolType = ProtocolType.Tcp;
         private IPEndPoint _iPEndPoint = new IPEndPoint(Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault(), 7777);
         private int _sendTimeout = 15;
-        public int _recieveTimeout = 15;
+        private int _recieveTimeout = 15;
 
         public SocketContext Build() 
         {

@@ -34,12 +34,12 @@ namespace AsyncDesignPattern.TaskFamily.Controller
         public void Handle(ITask task)
         {
             var tokenSource = new CancellationTokenSource();
-            SurveillanceCollection.Surveillances.ForEach(f => { if(f.Require()) Console.WriteLine("not valid state"); });
+            SurveillanceCollection.Surveillances.ForEach(f => { if(!f.Require()) Console.WriteLine("not valid state"); });
             SurveillanceCollection.Surveillances.ForEach((f) => { Invaritant(() => { return Require(); }, tokenSource); });
 
             TaskHub.Stack(task);
 
-            SurveillanceCollection.Surveillances.ForEach((f) => { if (f.Ensure()) Console.WriteLine("not valid state"); });
+            SurveillanceCollection.Surveillances.ForEach((f) => { if (!f.Ensure()) Console.WriteLine("not valid state"); });
             tokenSource.Cancel();
         }
 

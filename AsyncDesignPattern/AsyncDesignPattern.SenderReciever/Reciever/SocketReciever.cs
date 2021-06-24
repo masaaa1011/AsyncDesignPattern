@@ -20,7 +20,7 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
     public class SocketReciever : IReciever<SocketContext, SocketToken>
     {
         // hack: 以下のThread signalオブジェクトをstaticではない実装にした方がよい
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
+        public static ManualResetEvent threadSignal = new ManualResetEvent(false);
         internal Socket Listener { get; set; }
         public SocketContext Context { get; internal set; }
         public SocketToken Token { get; private set; }
@@ -55,37 +55,39 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
 
         public void ReceiveAsync()
         {
-            allDone.Reset();
+            threadSignal.Reset();
 
             Console.WriteLine("Waiting for a connection...");
             Listener.BeginAccept(
                 new AsyncCallback(AcceptCallback),
                 Listener);
 
-            allDone.WaitOne();
+            threadSignal.WaitOne();
         }
 
         public static void AcceptCallback(IAsyncResult ar)
         {
-            allDone.Set();
+            threadSignal.Set();
 
-            Socket listener = (Socket)ar.AsyncState;
-            Socket handler = listener.EndAccept(ar);
+            var listener = (Socket)ar.AsyncState;
+            var handler = listener.EndAccept(ar);
 
-            SocketState state = new SocketState();
-            state.workSocket = handler;
-            handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+            var state = new SocketStateBase();
+            var handlerSet = new SocketRecieverSet() { Socket = handler };
+
+            state.workSocket = handlerSet;
+            handler.BeginReceive(state.buffer, 0, SocketStateBase.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
         }
 
         public static void ReadCallback(IAsyncResult ar)
         {
-            String content = String.Empty;
+            var content = string.Empty;
 
-            SocketState state = (SocketState)ar.AsyncState;
-            Socket handler = state.workSocket;
+            SocketStateBase state = (SocketStateBase)ar.AsyncState;
+            var handler = (SocketRecieverSet)state.workSocket;
 
-            int bytesRead = handler.EndReceive(ar);
+            int bytesRead = handler.Socket.EndReceive(ar);
 
             if (bytesRead > 0)
             {
@@ -97,8 +99,10 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
 
                 if (!string.IsNullOrEmpty(token.EOF))
                 {
+                    var _content = (SocketToken)JsonSerializer.Deserialize(state.sb.ToString(), typeof(SocketToken));
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
+                    Console.WriteLine(_content.Payload??= "null");
 
                     Handler.Handle(
                             TaskFamily.TaskFactory.TaskFactory.Create(token.DesingPatternType.Value)
@@ -108,29 +112,28 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
                 }
                 else
                 {
-                    handler.BeginReceive(state.buffer, 0, SocketState.BufferSize, 0,
+                    handler.Socket.BeginReceive(state.buffer, 0, SocketStateBase.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
                 }
             }
         }
-        private static void Send(Socket handler, String data)
+        private static void Send(SocketRecieverSet handler, String data)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            handler.BeginSend(byteData, 0, byteData.Length, 0,
+            handler.Socket.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
         }
         private static void SendCallback(IAsyncResult ar)
         {
             try
             {
-                Socket handler = (Socket)ar.AsyncState;
-
-                int bytesSent = handler.EndSend(ar);
+                var handler = (SocketRecieverSet)ar.AsyncState;
+                int bytesSent = handler.Socket.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
+                handler.Socket.Shutdown(SocketShutdown.Both);
+                handler.Socket.Close();
             }
             catch (Exception e)
             {

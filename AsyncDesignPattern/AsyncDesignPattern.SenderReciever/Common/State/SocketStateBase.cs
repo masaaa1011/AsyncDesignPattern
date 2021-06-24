@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncDesignPattern.SenderReciever.Sender;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Common.State
 {
-    public class SocketState : IState
+    public class SocketStateBase : IStateSet
     {
         // Size of receive buffer.  
         public const int BufferSize = 1024;
@@ -19,6 +20,6 @@ namespace AsyncDesignPattern.SenderReciever.Common.State
         public StringBuilder sb = new StringBuilder();
 
         // Client socket.
-        public Socket workSocket = null;
+        public IStateSet workSocket = null;
     }
 }
