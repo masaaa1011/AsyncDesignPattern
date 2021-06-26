@@ -66,7 +66,7 @@ whileでたくさんタスクを実行してみます
   * クラスライブラリです
 * AsyncDesignPattern.Repository
   * リポジトリです。
-  * .NET 5 からrecordという修飾子が追加されました。classやstructみたいなもので、Equalsの挙動が変わっています。(便利そうなので勉強用として入れ込んでいます)
+  * C# 9.0からrecordという修飾子が追加されました。classやstructみたいなもので、Equalsの挙動が変わっています。(便利そうなので勉強用として入れ込んでいます)
   * クラスライブラリです
 * AsyncDesignPattern.Common
   * Commonです
