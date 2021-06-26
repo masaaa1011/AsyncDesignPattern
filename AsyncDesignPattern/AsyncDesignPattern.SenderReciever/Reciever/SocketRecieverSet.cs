@@ -12,7 +12,6 @@ namespace AsyncDesignPattern.SenderReciever.Reciever
 {
     public class SocketRecieverSet : IStateSet
     {
-        public ManualResetEvent allDone = new ManualResetEvent(false);
         public Socket Socket { get; set; }
         public SocketToken Token { get; set; }
     }

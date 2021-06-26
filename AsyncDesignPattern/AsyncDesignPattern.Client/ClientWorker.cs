@@ -1,5 +1,4 @@
 using AsyncDesignPattern.Common.Enum;
-using AsyncDesignPattern.Repository.Factory;
 using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Common.Enum;
 using AsyncDesignPattern.SenderReciever.Common.Factory;
@@ -38,7 +37,7 @@ namespace AsyncDesignPattern.Client
                         SocketTokenFactory.CreateToken(
                             id: Guid.NewGuid(),
                             desingPatternType: DesingPatternType.Balking, 
-                            statusCode: StatusCode.Ask, 
+                            statusCode: StatusCode.None, 
                             payload: "this is message from client"));
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }

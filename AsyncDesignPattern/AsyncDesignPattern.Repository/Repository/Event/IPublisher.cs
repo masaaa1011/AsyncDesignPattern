@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.SenderReciever.Common.Enum
+namespace AsyncDesignPattern.Repository.Repository.Event
 {
-    public enum StatusCode
+    public interface IPublisher
     {
-        None = 0,
-        Ok = 1,
-        Failed = 0
     }
 }

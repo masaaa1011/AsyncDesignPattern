@@ -1,4 +1,7 @@
+using AsyncDesignPattern.Repository.Entities;
 using AsyncDesignPattern.Repository.Repository;
+using AsyncDesignPattern.Repository.Repository.Components.Concrete.Mock;
+using AsyncDesignPattern.Repository.Repository.Components.Interfaces;
 using AsyncDesignPattern.SenderReciever.Common;
 using AsyncDesignPattern.SenderReciever.Context;
 using AsyncDesignPattern.SenderReciever.Context.Builder;
@@ -54,7 +57,16 @@ namespace AsyncDesignPattern.Server
                                             .Build());
                     });
 
-                    services.AddTransient<IRepository, MockRecordRepository>();
+                    services.Configure<MockRecordRepository<MockEntity>>(option =>
+                    {
+                        var read = new MockReader();
+                        var save = new MockSaver();
+                        var delete = new MockDeleter();
+
+                        option.UseSave(new MockSaver())
+                              .UseRead(new MockReader())
+                              .UseDelete(new MockDeleter());
+                    });
                 });
     }
 }

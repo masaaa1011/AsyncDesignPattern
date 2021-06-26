@@ -1,3 +1,4 @@
+using AsyncDesignPattern.Repository.Entities;
 using AsyncDesignPattern.Repository.Repository;
 using AsyncDesignPattern.TaskFamily.Contracts;
 using AsyncDesignPattern.TaskFamily.Controller;
@@ -22,7 +23,7 @@ namespace AsyncDesignPattern.Executor
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>()
-                            .AddTransient<IRepository, MockRecordRepository>();
+                            .AddTransient<IRepository, MockRecordRepository<MockEntity>>();
 
                     services.Configure<TaskHandler>(option =>
                     {

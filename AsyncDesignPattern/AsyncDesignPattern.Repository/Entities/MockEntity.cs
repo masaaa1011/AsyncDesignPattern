@@ -1,6 +1,4 @@
-﻿using AsyncDesignPattern.Repository.Database.Tables;
-using AsyncDesignPattern.Repository.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.Repository.Entities
 {
-    public class MockEntity : IEntity<MockRecord>
+    public record MockEntity : IEntity
     {
-        public MockEntity()
-        {
-            Records = new List<MockRecord>(MockRecordTable.CrreateRecords().ToList());
-        }
-
-        public List<MockRecord> Records { get; private set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public bool IsDelete { get; set; }
+        public DateTime Day { get; set; }
     }
 }

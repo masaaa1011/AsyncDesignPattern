@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Dto
+namespace AsyncDesignPattern.Repository.Repository.Event
 {
-    public interface IRecord
+    public interface ISubscriber
     {
     }
 }

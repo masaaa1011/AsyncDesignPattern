@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Reciever
 {
-    public interface IReciever<T, V> : IUseContext<T> where T : IContext where V : IToken
+    public interface IReciever<TContext, TToken> : IUseContext<TContext> where TContext : IContext where TToken : IToken
     {
-        public T Context { get; }
-        public V Token { get; }
+        public TContext Context { get; }
+        public TToken Token { get; }
         public void ReceiveAsync();
     }
 }

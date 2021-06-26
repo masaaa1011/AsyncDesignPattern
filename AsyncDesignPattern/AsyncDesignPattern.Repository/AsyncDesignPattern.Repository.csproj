@@ -10,8 +10,4 @@
     <ProjectReference Include="..\DesignPatterns\SingleThreadedExecution\SingleThreadedExecution.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Factory\" />
-  </ItemGroup>
-
 </Project>

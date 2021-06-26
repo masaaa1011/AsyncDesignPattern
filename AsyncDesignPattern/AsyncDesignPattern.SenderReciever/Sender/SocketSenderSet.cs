@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Sender
 {
-    public class SocketSenderSet : IStateSet
+    public class SocketSenderSet : IStateSet, IDisposable
     {
         public static SocketSenderSet Create(SocketContext context)
             => new SocketSenderSet(context);
+
 
         private SocketSenderSet(SocketContext context)
         {
@@ -27,5 +28,10 @@ namespace AsyncDesignPattern.SenderReciever.Sender
         public ManualResetEvent sendDone = new ManualResetEvent(false);
         public ManualResetEvent receiveDone = new ManualResetEvent(false);
         public SocketToken Token { get; set;}
+
+        public void Dispose()
+        {
+            Socket.Shutdown(SocketShutdown.Both);
+        }
     }
 }

@@ -35,37 +35,12 @@ namespace AsyncDesignPattern.TaskFamily.Controller
         {
             var tokenSource = new CancellationTokenSource();
             SurveillanceCollection.Surveillances.ForEach(f => { if(!f.Require()) Console.WriteLine("not valid state"); });
-            SurveillanceCollection.Surveillances.ForEach((f) => { Invaritant(() => { return Require(); }, tokenSource); });
+            SurveillanceCollection.Surveillances.ForEach((f) => { f.Invaritant(() => { return f.Require(); }, tokenSource); });
 
             TaskHub.Stack(task);
 
             SurveillanceCollection.Surveillances.ForEach((f) => { if (!f.Ensure()) Console.WriteLine("not valid state"); });
             tokenSource.Cancel();
-        }
-
-        public bool Require()
-        {
-            return System.Environment.SystemPageSize < System.Environment.WorkingSet;
-        }
-
-
-        public bool Ensure()
-        {
-            return true;
-        }
-
-        public async void Invaritant(Func<bool> func, CancellationTokenSource cancellation)
-        {
-            
-            while (true)
-            {
-                var isValidState = await Task.Run(async () =>
-                {
-                    await Task.Delay(1000);
-                    return func();
-                });
-                if (cancellation.IsCancellationRequested) break;
-            }
         }
     }
 }

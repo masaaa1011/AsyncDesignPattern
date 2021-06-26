@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Entities
+namespace AsyncDesignPattern.Repository.Repository.Components.Interfaces
 {
-    public interface IEntity
+    public interface ISave<IEntity>
     {
-        Guid Id { get; }
+        public IEntity Save(IEntity entity);
     }
 }

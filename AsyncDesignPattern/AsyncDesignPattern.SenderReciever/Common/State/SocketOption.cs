@@ -8,18 +8,11 @@ using System.Threading.Tasks;
 
 namespace AsyncDesignPattern.SenderReciever.Common.State
 {
-    public class SocketStateBase : IStateSet
+    public class SocketOption : IStateSet
     {
-        // Size of receive buffer.  
         public const int BufferSize = 1024;
-
-        // Receive buffer.  
         public byte[] buffer = new byte[BufferSize];
-
-        // Received data string.
         public StringBuilder sb = new StringBuilder();
-
-        // Client socket.
         public IStateSet workSocket = null;
     }
 }
