@@ -18,12 +18,6 @@
 * .NET 6(sdk入れるのがめんどくさい人はバージョン下げても大丈夫です。多分動きます。)
 ## 使用ツール
 * [visual studio 2022(preview)](https://visualstudio.microsoft.com/ja/vs/preview/vs2022/)
-* docker desktop(composeが使えればよいです。)
-
----
-# 準備してほしいもの
-* gitアカウント
-  * Forkして使っていただこうかと考えています。めんどくさければブランチここに作っちゃってもよいです。
 * [Docker Desktopのインストール](https://www.docker.com/products/docker-desktop)
 
 ---
