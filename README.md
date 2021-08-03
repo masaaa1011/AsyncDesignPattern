@@ -17,22 +17,14 @@
 * docker runtime(dockerで動かしたい人だけ)
 * .NET 6(sdk入れるのがめんどくさい人はバージョン下げても大丈夫です。多分動きます。)
 ## 使用ツール
-* visual studio (バージョンはなんでもよいですが、2022preview版だと.NET6のランタイムが初めから入っています。あとコンテナツール便利です。)
+* [visual studio 2022(preview)](https://visualstudio.microsoft.com/ja/vs/preview/vs2022/)
 * docker desktop(composeが使えればよいです。)
 
 ---
 # 準備してほしいもの
 * gitアカウント
   * Forkして使っていただこうかと考えています。めんどくさければブランチここに作っちゃってもよいです。
-* Docker Desktopのインストール
-  * あってもなくてもどっちでもよいですが、コンテナで実行したい人はあると楽です。
-  * https://www.docker.com/products/docker-desktop
-* visual sutdio preview機能の有効化
-  * .NET　6で動かすために必要です。(Use Preview of .NET Core)
-  * https://docs.microsoft.com/ja-jp/visualstudio/ide/reference/environment-preview-features-options?view=vs-2019
-* .NET 6 sdkのインストール
-  * sdkが必要です
-  * https://dotnet.microsoft.com/download/visual-studio-sdks
+* [Docker Desktopのインストール](https://www.docker.com/products/docker-desktop)
 
 ---
 # プロジェクトについて
