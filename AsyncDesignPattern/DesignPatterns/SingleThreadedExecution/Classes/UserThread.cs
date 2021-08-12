@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SingleThreadedExecution
+namespace SingleThreadedExecution.Classes
 {
     public class UserThread : IUserThread
     {

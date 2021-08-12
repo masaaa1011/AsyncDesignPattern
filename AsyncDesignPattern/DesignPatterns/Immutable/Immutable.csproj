@@ -9,4 +9,8 @@
 	  <ProjectReference Include="..\..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
+	</ItemGroup>
+
 </Project>
