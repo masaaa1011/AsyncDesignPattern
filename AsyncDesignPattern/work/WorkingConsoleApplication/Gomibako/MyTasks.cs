@@ -11,7 +11,7 @@ namespace WorkingConsoleApplication
 {
     public class MyTaskProject
     {
-        public static async Task Execute(string[] args)
+        public static async Task Main(string[] args)
         {
             StartUp();
             await Start(args);
@@ -27,11 +27,7 @@ namespace WorkingConsoleApplication
         }
         public static async Task Start(string[] args)
         {
-            var result = await MyTask<string>.Run(() =>
-            {
-                return "this is response message from lambda";
-            });
-            
+            var result = await MyTask<string>.Run(() => "this is response message from lambda");
             Console.WriteLine(result);
         }
     }
@@ -120,7 +116,7 @@ namespace WorkingConsoleApplication
         internal void SetContinuationForAwait(Action continuationAction)
         {
             m_callback = continuationAction;
-            if (IsCompleted && m_callback != null)
+            if (IsCompleted)
                 m_callback();
         }
         /// <summary>
@@ -131,7 +127,7 @@ namespace WorkingConsoleApplication
         public static MyTask<TResult> Run(Func<TResult> function)
         {
             var t = new MyTask<TResult>(function);
-            t.Start(function);
+            t.Start();
             return t;
         }
         /// <summary>
@@ -146,7 +142,7 @@ namespace WorkingConsoleApplication
         /// lambdaで渡された関数を実行します。
         /// </summary>
         /// <param name="function"></param>
-        public void Start(Func<TResult> function)
+        public void Start()
         {
             ThreadPool.QueueUserWorkItem(_ =>
             {

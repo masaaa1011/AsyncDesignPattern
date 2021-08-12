@@ -3,10 +3,17 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>9.0</LangVersion>
+		<ApplicationIcon />
+		<OutputType>Exe</OutputType>
+		<StartupObject />
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\AsyncDesignPattern.Common\AsyncDesignPattern.Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 
 </Project>
