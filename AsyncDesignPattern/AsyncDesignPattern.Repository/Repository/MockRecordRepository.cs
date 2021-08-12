@@ -23,13 +23,10 @@ namespace AsyncDesignPattern.Repository.Repository
 
         public TEntity Save(TEntity entity)
             => _saver.Save(entity);
-
         public TEntity ReadOne(Guid entity)
             => _reader.ReadOne(entity);
-
         public List<TEntity> ReadAll()
             => _reader.ReadAll();
-
         public TEntity Delete(TEntity entity)
             => _deleter.Delete(entity);
     }

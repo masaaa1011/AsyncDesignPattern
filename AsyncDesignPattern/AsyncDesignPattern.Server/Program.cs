@@ -1,3 +1,4 @@
+using AsyncDesignPattern.Common.Task;
 using AsyncDesignPattern.Repository.Entities;
 using AsyncDesignPattern.Repository.Repository;
 using AsyncDesignPattern.Repository.Repository.Components.Concrete.Mock;
@@ -59,14 +60,13 @@ namespace AsyncDesignPattern.Server
 
                     services.Configure<MockRecordRepository<MockEntity>>(option =>
                     {
-                        var read = new MockReader();
-                        var save = new MockSaver();
-                        var delete = new MockDeleter();
-
                         option.UseSave(new MockSaver())
                               .UseRead(new MockReader())
                               .UseDelete(new MockDeleter());
                     });
+
+                    services.AddScoped<ActiveObject.ActiveObjectTask>();
+                    services.AddScoped<SingleThreadedExecution.SingleThreadedExecutionTask>();
                 });
     }
 }

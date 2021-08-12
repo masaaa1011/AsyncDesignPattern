@@ -22,7 +22,7 @@ namespace AsyncDesignPattern.Server
         private readonly IReciever<SocketContext, SocketToken> _reciever;
         private readonly MockRecordRepository<MockEntity> _repository;
 
-        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever, IOptions<MockRecordRepository<MockEntity>> repository)
+        public ServerWorker(ILogger<ServerWorker> logger, IOptions<SocketReciever> reciever, IOptions<MockRecordRepository<MockEntity>> repository, IServiceProvider provider)
         {
             _logger = logger;
             _reciever = reciever.Value;
@@ -34,7 +34,6 @@ namespace AsyncDesignPattern.Server
             {
                 try
                 {
-                    var records = _repository.ReadAll();
                     _reciever.ReceiveAsync();
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }

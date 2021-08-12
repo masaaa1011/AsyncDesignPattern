@@ -1,4 +1,5 @@
-﻿using AsyncDesignPattern.Repository.Entities;
+﻿using AsyncDesignPattern.Common.Extensions;
+using AsyncDesignPattern.Repository.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;

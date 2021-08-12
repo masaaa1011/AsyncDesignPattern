@@ -28,8 +28,9 @@ namespace AsyncDesignPattern.Executor
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 try
                 {
-                    var task = TaskFamily.TaskFactory.TaskFactory.Create(Common.Enum.DesingPatternType.SingleThreadedExecution);
-                    _handler.Handle(task);
+                    _handler.Handle(
+                            TaskFamily.TaskFactory.TaskFactory.Create(Common.Enum.DesingPatternType.SingleThreadedExecution)
+                        );
 
                     await Task.Delay(1000, stoppingToken);
                 }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AsyncDesignPattern.Repository.Database.Tables
+namespace AsyncDesignPattern.Common.Extensions
 {
-    internal static class RangeExtension
+    public static class RangeExtension
     {
         public static RangeEnumerator GetEnumerator(this Range range) => new RangeEnumerator(range);
         public struct RangeEnumerator : IEnumerator<int>
