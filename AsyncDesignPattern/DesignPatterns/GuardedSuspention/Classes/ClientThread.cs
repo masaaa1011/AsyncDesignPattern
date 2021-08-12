@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncDesignPattern.Common.Task;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace GuardedSuspention.Classes
 {
-    public class ClientThread
+    public class ClientThread : ITask
     {
         private IRequestPuttable m_RequestPutter;
         public ClientThread(IRequestPuttable queue)
             => m_RequestPutter = queue;
-        public void Run()
+
+        public void ExecuteAsync()
         {
             var counter = 0;
             while (true)
