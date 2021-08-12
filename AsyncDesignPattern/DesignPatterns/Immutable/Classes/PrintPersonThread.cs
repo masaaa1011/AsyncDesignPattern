@@ -9,7 +9,7 @@ namespace Immutable.Classes
 {
     public class PrintPersonThread
     {
-		Person _person;
+	 	private Person _person;
 
 		public PrintPersonThread(Person person)
 		{
