@@ -132,7 +132,7 @@ namespace WorkingConsoleApplication
         }
         /// <summary>
         /// var response = await {Instance}と書いた際にこの関数が最初に呼ばれます
-        /// </summary>
+        /// </summary> 
         /// <returns></returns>
         public MyTaskAwaiter<TResult> GetAwaiter()
             => new MyTaskAwaiter<TResult>(this);
