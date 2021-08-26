@@ -15,11 +15,11 @@ namespace GuardedSuspention
         {
             var requestQueue = new RequestQueue();
 
-            var Client = new ClientThread(requestQueue);
-            var server = new ServerThread(requestQueue);
+            ITask client = new ClientThread(requestQueue);
+            ITask server = new ServerThread(requestQueue);
 
-            Task.Run(() => Client.Run());
-            Task.Run(() => server.Run());
+            Task.Run(() => client.ExecuteAsync());
+            Task.Run(() => server.ExecuteAsync());
             
             Console.ReadLine();
         }
