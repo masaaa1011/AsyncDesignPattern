@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<TargetFramework>net6.0</TargetFramework>
-	<LangVersion>9.0</LangVersion>
+	<LangVersion>10.0</LangVersion>
     <UserSecretsId>dotnet-WorkerService1-AC354E11-1CEE-4890-BF35-40C9DE236E1E</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <StartupObject>AsyncDesignPattern.Client.Program</StartupObject>

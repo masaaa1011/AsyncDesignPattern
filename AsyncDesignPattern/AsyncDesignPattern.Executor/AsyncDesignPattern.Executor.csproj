@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <UserSecretsId>dotnet-AsyncDesignPattern.Executor-AD6F38A6-E9E5-4405-8C4E-2AC6ED03CF57</UserSecretsId>
+	<LangVersion>10.0</LangVersion>
+	<UserSecretsId>dotnet-AsyncDesignPattern.Executor-AD6F38A6-E9E5-4405-8C4E-2AC6ED03CF57</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
