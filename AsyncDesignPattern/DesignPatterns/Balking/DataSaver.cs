@@ -57,8 +57,8 @@ namespace Balking
             {
                 lock (_lock)
                 {
-                    data.SendSavedSignal();
                     Console.WriteLine($"{user}で保存された内容: {data.Content}");
+                    data.SendSavedSignal();
                 }
             }
             catch (Exception e)
