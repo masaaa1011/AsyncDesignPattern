@@ -15,8 +15,8 @@ namespace Balking
     {
         private string m_directory;
         private IData<string> m_data;
-        private IDataSavable m_saver;
-        public ManualFileSaveClientWorkers(string directory, IData<string> data, IDataSavable saver)
+        private IDataSavable<string> m_saver;
+        public ManualFileSaveClientWorkers(string directory, IData<string> data, IDataSavable<string> saver)
         {
             m_directory = directory;
             m_data = data;
@@ -24,16 +24,18 @@ namespace Balking
         }
         public async void Start()
         {
+            var counter = 0;
             while (true)
             {
                 try
                 {
                     var content = string.Join(string.Empty, "qawzsexdrcftvgybhunjimkolp".OrderBy(o => Guid.NewGuid()));
-                    m_data.Change(content);
+                    m_data.Change($"Count:{counter}回目 - {content}");
 
                     await Task.Delay(2000);
 
                     m_saver.Save(m_data, SaveClassification.Manual);
+                    counter++;
                 }
                 catch (Exception e)
                 {
@@ -50,9 +52,9 @@ namespace Balking
     {
         private string m_directory;
         private IData<string> m_data;
-        private IDataSavable m_saver;
+        private IDataSavable<string> m_saver;
 
-        public PeriodicFileSaveServerWorkers(string directory, IData<string> data, IDataSavable saver)
+        public PeriodicFileSaveServerWorkers(string directory, IData<string> data, IDataSavable<string> saver)
         {
             m_directory = directory;
             m_data = data;

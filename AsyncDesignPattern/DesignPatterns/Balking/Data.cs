@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Balking
 {
-    public interface ISavable
-    {
-        void Save();
-    }
     public interface IChangeable<TType>
     {
         void Change(TType value);
+        void SendSavedSignal();
         bool IsChanged { get; }
     }
-    public interface IData<TType> : IChangeable<TType>, ISavable
+    public interface IData<TType> : IChangeable<TType>
     {
         string Title { get; }
         TType Content {  get; }
@@ -47,7 +44,7 @@ namespace Balking
             }
         }
 
-        public void Save()
+        public void SendSavedSignal()
         {
             lock (_lock)
             {
