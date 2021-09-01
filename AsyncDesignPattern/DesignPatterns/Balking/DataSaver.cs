@@ -19,7 +19,7 @@ namespace Balking
             m_directory = directory;
         }
         /// <summary>
-        /// if you wanna watch, using terminal with command, "while ($true -eq $true) { Get-Content .\sharedFile.txt ; sleep 1 ; clear}"
+        /// "while ($true -eq $true) { Get-Content .\sharedFile.txt ; sleep 1 ; clear}"
         /// </summary>
         /// <param name="data"></param>
         /// <param name="user"></param>
