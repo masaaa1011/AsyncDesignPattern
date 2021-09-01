@@ -32,7 +32,7 @@ namespace Balking
                 {
                     if (!Directory.Exists(m_directory)) Directory.CreateDirectory(m_directory);
                     System.IO.File.WriteAllText(Path.Combine(m_directory, data.Title), data.Content);
-                    data.SendSavedSignal();
+                    data.RecieveSavedSignal();
                 }
             }
             catch (Exception e)
@@ -58,7 +58,7 @@ namespace Balking
                 {
                     if (!data.IsChanged) return;
                     Console.WriteLine($"{user}で保存された内容: {data.Content}");
-                    data.SendSavedSignal();
+                    data.RecieveSavedSignal();
                 }
             }
             catch (Exception e)

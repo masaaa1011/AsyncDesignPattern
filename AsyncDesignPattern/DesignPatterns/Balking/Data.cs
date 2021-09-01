@@ -9,7 +9,7 @@ namespace Balking
     public interface IChangeable<TType>
     {
         void Change(TType value);
-        void SendSavedSignal();
+        void RecieveSavedSignal();
         bool IsChanged { get; }
     }
     public interface IData<TType> : IChangeable<TType>
@@ -44,7 +44,7 @@ namespace Balking
             }
         }
 
-        public void SendSavedSignal()
+        public void RecieveSavedSignal()
         {
             lock (_lock)
             {
