@@ -39,9 +39,8 @@ namespace Balking
             
             m_serviceCollection.AddScoped<IClientWorker, ManualFileSaveClientWorkers>(provider
                 => new ManualFileSaveClientWorkers(m_storeDirectory, data, saver));
-            m_serviceCollection.AddScoped<IServerWorker, PeriodicFileSaveServerWorkers>(provider
-                => new PeriodicFileSaveServerWorkers(m_storeDirectory, data, saver));
+            m_serviceCollection.AddScoped<IServerWorker, AutoSaveServerWorkers>(provider
+                => new AutoSaveServerWorkers(m_storeDirectory, data, saver));
         }
     }
-
 }

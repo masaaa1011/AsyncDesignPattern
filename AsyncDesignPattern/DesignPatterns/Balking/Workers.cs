@@ -48,13 +48,13 @@ namespace Balking
     {
         void Start();
     }
-    public class PeriodicFileSaveServerWorkers : IServerWorker
+    public class AutoSaveServerWorkers : IServerWorker
     {
         private string m_directory;
         private IData<string> m_data;
         private IDataSavable<string> m_saver;
 
-        public PeriodicFileSaveServerWorkers(string directory, IData<string> data, IDataSavable<string> saver)
+        public AutoSaveServerWorkers(string directory, IData<string> data, IDataSavable<string> saver)
         {
             m_directory = directory;
             m_data = data;
