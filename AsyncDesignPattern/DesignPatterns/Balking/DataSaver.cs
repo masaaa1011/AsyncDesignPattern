@@ -52,11 +52,11 @@ namespace Balking
         }
         public void Save(IData<string> data, SaveClassification user)
         {
-            if (!data.IsChanged) return;
             try
             {
                 lock (_lock)
                 {
+                    if (!data.IsChanged) return;
                     Console.WriteLine($"{user}で保存された内容: {data.Content}");
                     data.SendSavedSignal();
                 }

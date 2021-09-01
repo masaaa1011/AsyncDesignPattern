@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Balking
 {
-    public interface IClientWorker
+    public interface IWorker
     {
         void Start();
     }
 
-    public class ManualFileSaveClientWorkers : IClientWorker
+    public class ManualFileSaveClientWorkers : IWorker
     {
         private string m_directory;
         private IData<string> m_data;
@@ -44,11 +44,8 @@ namespace Balking
             }
         }
     }
-    public interface IServerWorker
-    {
-        void Start();
-    }
-    public class AutoSaveServerWorkers : IServerWorker
+
+    public class AutoSaveServerWorkers : IWorker
     {
         private string m_directory;
         private IData<string> m_data;

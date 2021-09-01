@@ -17,29 +17,21 @@ namespace Balking
         {
             StartUp(args);
             var provider = m_serviceCollection.BuildServiceProvider();
-
-            Task.Run(() =>
-            {
-                var worker = provider.GetService<IClientWorker>();
-                worker.Start();
-            });
-            Task.Run(() =>
-            {
-                var worker = provider.GetService<IServerWorker>();
-                worker.Start();
-            });
+            provider.GetServices<IWorker>().ToList().ForEach(
+                worker => Task.Run( () => worker.Start() )
+            );
 
             Console.ReadLine();
         }
         public static void StartUp(string[] args)
         {
             var data = new Data(m_fileTitle, string.Empty);
-            var saver = new FileDataSaver(m_storeDirectory);
-            //var saver = new ConsoleDataSaver(m_storeDirectory);
-            
-            m_serviceCollection.AddScoped<IClientWorker, ManualFileSaveClientWorkers>(provider
+            //var saver = new FileDataSaver(m_storeDirectory);
+            var saver = new ConsoleDataSaver(m_storeDirectory);
+
+            m_serviceCollection.AddScoped<IWorker, ManualFileSaveClientWorkers>(provider
                 => new ManualFileSaveClientWorkers(m_storeDirectory, data, saver));
-            m_serviceCollection.AddScoped<IServerWorker, AutoSaveServerWorkers>(provider
+            m_serviceCollection.AddScoped<IWorker, AutoSaveServerWorkers>(provider
                 => new AutoSaveServerWorkers(m_storeDirectory, data, saver));
         }
     }
