@@ -25,11 +25,11 @@ namespace Balking
         /// <param name="user"></param>
         public void Save(IData<string> data, SaveClassification user)
         {
-            if (!data.IsChanged) return;
             try
             {
                 lock (_lock)
                 {
+                    if (!data.IsChanged) return;
                     if (!Directory.Exists(m_directory)) Directory.CreateDirectory(m_directory);
                     System.IO.File.WriteAllText(Path.Combine(m_directory, data.Title), data.Content);
                     data.RecieveSavedSignal();
