@@ -13,14 +13,10 @@ namespace Balking
 
     public class ManualFileSaveClientWorkers : IWorker
     {
-        private string m_directory;
         private IData<string> m_data;
-        private IDataSavable<string> m_saver;
-        public ManualFileSaveClientWorkers(string directory, IData<string> data, IDataSavable<string> saver)
+        public ManualFileSaveClientWorkers(IData<string> data)
         {
-            m_directory = directory;
             m_data = data;
-            m_saver = saver;
         }
         public async void Start()
         {
@@ -34,7 +30,7 @@ namespace Balking
 
                     await Task.Delay(2000);
 
-                    m_saver.Save(m_data, SaveClassification.Manual);
+                    m_data.Save(SaveClassification.Manual);
                     counter++;
                 }
                 catch (Exception e)
@@ -51,11 +47,9 @@ namespace Balking
         private IData<string> m_data;
         private IDataSavable<string> m_saver;
 
-        public AutoSaveServerWorkers(string directory, IData<string> data, IDataSavable<string> saver)
+        public AutoSaveServerWorkers(IData<string> data)
         {
-            m_directory = directory;
             m_data = data;
-            m_saver = saver;
         }
         public async void Start()
         {
@@ -63,7 +57,7 @@ namespace Balking
             {
                 try
                 {
-                    m_saver.Save(m_data, SaveClassification.AutoSaved);
+                    m_data.Save(SaveClassification.AutoSaved);
                     await Task.Delay(5000);
                 }
                 catch (Exception e)

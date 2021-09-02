@@ -25,14 +25,14 @@ namespace Balking
         }
         public static void StartUp(string[] args)
         {
-            var data = new Data(m_fileTitle, string.Empty);
             //var saver = new FileDataSaver(m_storeDirectory);
-            var saver = new ConsoleDataSaver(m_storeDirectory);
+            var saver = new ConsoleDataSaver();
+            var data = new Data(m_fileTitle, string.Empty, saver);
 
             m_serviceCollection.AddScoped<IWorker, ManualFileSaveClientWorkers>(provider
-                => new ManualFileSaveClientWorkers(m_storeDirectory, data, saver));
+                => new ManualFileSaveClientWorkers(data));
             m_serviceCollection.AddScoped<IWorker, AutoSaveServerWorkers>(provider
-                => new AutoSaveServerWorkers(m_storeDirectory, data, saver));
+                => new AutoSaveServerWorkers(data));
         }
     }
 }

@@ -32,7 +32,6 @@ namespace Balking
                     if (!data.IsChanged) return;
                     if (!Directory.Exists(m_directory)) Directory.CreateDirectory(m_directory);
                     System.IO.File.WriteAllText(Path.Combine(m_directory, data.Title), data.Content);
-                    data.RecieveSavedSignal();
                 }
             }
             catch (Exception e)
@@ -44,11 +43,9 @@ namespace Balking
     }
     public class ConsoleDataSaver : IDataSavable<string>
     {
-        private string m_directory;
         private object _lock = new object();
-        public ConsoleDataSaver(string directory)
+        public ConsoleDataSaver()
         {
-            m_directory = directory;
         }
         public void Save(IData<string> data, SaveClassification user)
         {
@@ -58,7 +55,6 @@ namespace Balking
                 {
                     if (!data.IsChanged) return;
                     Console.WriteLine($"{user}で保存された内容: {data.Content}");
-                    data.RecieveSavedSignal();
                 }
             }
             catch (Exception e)

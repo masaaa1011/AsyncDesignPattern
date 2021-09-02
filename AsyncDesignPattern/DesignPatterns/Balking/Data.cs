@@ -12,7 +12,11 @@ namespace Balking
         void RecieveSavedSignal();
         bool IsChanged { get; }
     }
-    public interface IData<TType> : IChangeable<TType>
+    public interface ISavable
+    {
+        void Save(SaveClassification user);
+    }
+    public interface IData<TType> : IChangeable<TType>, ISavable
     {
         string Title { get; }
         TType Content {  get; }
@@ -21,18 +25,19 @@ namespace Balking
     {
         private string m_title;
         private string m_content;
+        private IDataSavable<string> m_saver;
         private bool m_isChanged;
         private object _lock = new object();
-        public Data(string title, string content)
+        public Data(string title, string content, IDataSavable<string> saver)
         {
             m_title = title;
             m_content = content;
+            m_saver = saver;
             m_isChanged = false;
         }
         public string Title => m_title;
         public string Content => m_content;
         public bool IsChanged => m_isChanged;
-
         public void Change(string value)
         {
             lock (_lock)
@@ -50,6 +55,12 @@ namespace Balking
             {
                 m_isChanged = false;
             }
+        }
+
+        public void Save(SaveClassification user)
+        {
+            m_saver.Save(this, user);
+            RecieveSavedSignal();
         }
     }
     public enum SaveClassification
