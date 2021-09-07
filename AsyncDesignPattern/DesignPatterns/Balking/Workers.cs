@@ -10,7 +10,6 @@ namespace Balking
     {
         void Start();
     }
-
     public class ManualFileSaveClientWorkers : IWorker
     {
         private IData<string> m_data;
@@ -43,10 +42,7 @@ namespace Balking
 
     public class AutoSaveServerWorkers : IWorker
     {
-        private string m_directory;
         private IData<string> m_data;
-        private IDataSavable<string> m_saver;
-
         public AutoSaveServerWorkers(IData<string> data)
         {
             m_data = data;

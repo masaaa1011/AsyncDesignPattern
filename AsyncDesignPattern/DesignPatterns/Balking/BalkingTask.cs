@@ -7,7 +7,6 @@ namespace Balking
     public class BalkingTask : ITask
     {
         private static IServiceCollection m_serviceCollection = new ServiceCollection();
-        private static string m_storeDirectory = @"./datas";
         private static string m_fileTitle = "sharedFile.txt";
         public void ExecuteAsync()
         {
@@ -20,7 +19,6 @@ namespace Balking
             provider.GetServices<IWorker>().ToList().ForEach(
                 worker => Task.Run( () => worker.Start() )
             );
-
             Console.ReadLine();
         }
         public static void StartUp(string[] args)

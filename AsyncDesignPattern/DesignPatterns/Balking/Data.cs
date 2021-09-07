@@ -9,7 +9,6 @@ namespace Balking
     public interface IChangeable<TType>
     {
         void Change(TType value);
-        void RecieveSavedSignal();
         bool IsChanged { get; }
     }
     public interface ISavable
@@ -42,25 +41,17 @@ namespace Balking
         {
             lock (_lock)
             {
-                // 重たい何かの処理
-                Thread.Sleep(1000);
                 m_content = value;
                 m_isChanged = true;
             }
         }
-
-        public void RecieveSavedSignal()
+        public void Save(SaveClassification user)
         {
             lock (_lock)
             {
+                m_saver.Save(this, user);
                 m_isChanged = false;
             }
-        }
-
-        public void Save(SaveClassification user)
-        {
-            m_saver.Save(this, user);
-            RecieveSavedSignal();
         }
     }
     public enum SaveClassification
