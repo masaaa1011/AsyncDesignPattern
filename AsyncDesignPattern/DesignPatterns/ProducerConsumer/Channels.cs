@@ -26,6 +26,10 @@ namespace ProducerConsumer
         /// </summary>
         private readonly IData<string>[] m_cakes;
         /// <summary>
+        /// テーブルに置けるケーキの最大数
+        /// </summary>
+        private readonly int m_maxSize;
+        /// <summary>
         /// 現在置いてあるcakeの数
         /// </summary>
         private int m_currentSize = 0;
@@ -58,9 +62,14 @@ namespace ProducerConsumer
         /// </summary>
         private object t_lock = new object();
 
+        /// <summary>
+        /// テーブルに置けるケーキの上限を決めます。
+        /// </summary>
+        /// <param name="maxSize">テーブルに置けるケーキの上限数</param>
         public DinningTableChannel(int maxSize)
         {
             m_cakes = new IData<string>[maxSize];
+            m_maxSize = maxSize;
         }
 
         /// <summary>
@@ -76,25 +85,34 @@ namespace ProducerConsumer
         {
             lock (p_lock)
             {
+                // ①：もしm_cakesが最大まで埋まっていたら待機します。
                 while (m_cakes.Length <= m_currentSize)
                 {
                     m_putEventSlim.Wait();
                 }
 
+                // ケーキにラベルを張ります。
                 data.AddLabel(CakeIndexer.NextSerialNo());
+                // ②：m_cakesに渡されたcakeを配置します。
                 m_cakes[m_nextPutPosition] = data;
 
                 // maxSize3: 0 -> 1 -> 2 -> 0 -> 1 -> 2 ...
                 m_nextPutPosition = (m_nextPutPosition + 1) % m_cakes.Length;
+
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
+                var outputCurrentSize = m_currentSize + 1;
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
+
+                // テーブルに置かれているケーキの数を増やします。
                 m_currentSize++;
 
-                // ----------------- 標準出力表示用 -----------------
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
                 var currentPositon = ConsolePositionRepository.GetNextCursorPosition();
                 Console.SetCursorPosition(currentPositon.Left, currentPositon.Top);
-                Console.WriteLine($"ケーキが用意できました {data.Content}");
-                // ----------------- 標準出力表示用 -----------------
+                Console.WriteLine($"ケーキが用意できました {data.Content} - テーブル内のケーキ数 {outputCurrentSize} / {m_maxSize}");
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
 
-                // Take()の再開
+                // ③：もしTake()が待ち状態であれば再開させます。
                 m_takeEventSlim.Set();
             }
         }
@@ -112,23 +130,33 @@ namespace ProducerConsumer
         {
             lock (t_lock)
             {
-                while(m_currentSize == 0)
+                // ①：もしm_cakesがからであれば待機します。
+                while (m_currentSize == 0)
                 {
                     m_takeEventSlim.Wait();
                 }
 
+                // テーブルからケーキを取り出します
                 var cake = m_cakes[m_nextTakePosition];
+
+                // ②：m_cakesからcakeを1つ取り出します。
                 // maxSize3: 0 -> 1 -> 2 -> 0 -> 1 -> 2 ...
                 m_nextTakePosition = (m_nextTakePosition + 1) % m_cakes.Length;
+
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
+                var outputCurrentSize = m_currentSize - 1;
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
+ 
+                // テーブルに置かれているケーキの数を1つ減らします
                 m_currentSize--;
 
-                // ----------------- 標準出力表示用 -----------------
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
                 var currentPositon = ConsolePositionRepository.GetNextCursorPosition();
                 Console.SetCursorPosition(currentPositon.Left, currentPositon.Top);
-                Console.WriteLine($"ケーキが購入されました。- {cake.Content}");
-                // ----------------- 標準出力表示用 -----------------
+                Console.WriteLine($"ケーキが購入されました。- {cake.Content} - テーブル内のケーキ数 {outputCurrentSize} / {m_maxSize}");
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
 
-                // Put()の再開
+                // ③：もしPut()が待ち状態であれば再開させます。
                 m_putEventSlim.Set();
 
                 return cake;

@@ -13,10 +13,18 @@ namespace ProducerConsumer
 
     public class CakeProducer : IProducer
     {
+        /// <summary>
+        /// 生産者の名前
+        /// </summary>
         private readonly string m_producerName;
-        private readonly Random m_random = new Random();
+        /// <summary>
+        /// Channelオブジェクト
+        /// </summary>
         private readonly IChannel<string> m_channel;
-        private readonly object _lock = new object();
+        /// <summary>
+        /// ケーキを作る時間のランダム時間用
+        /// </summary>
+        private readonly Random m_random = new Random();
         public CakeProducer(IChannel<string> channel, string producerName)
         {
             m_channel = channel;
@@ -28,25 +36,26 @@ namespace ProducerConsumer
             {
                 await Task.Delay(m_random.Next(1000, 3000));
 
-                // 注意：ここでの番号振りは同期性を持たないため連番例は持ちません。(サンプルコードですと)
+                // ケーキを作ります。
                 var cake = new Cake(CakeRepository.本日の気まぐれケーキ());
 
-                // ----------------- 標準出力表示用 -----------------
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
                 var output = string.Empty;
                 var currentCursorPosition = ConsolePositionRepository.GetNextCursorPosition();
-                // ----------------- 標準出力表示用 -----------------
+                ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
 
                 new List<string>(cake.Content.Select(s => s.ToString())).ForEach(f => 
                 {
-                    // ----------------- 標準出力表示用 -----------------
+                    ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
                     output += f;
                     Console.SetCursorPosition(currentCursorPosition.Left, currentCursorPosition.Top);
                     Console.WriteLine($"{m_producerName}(生産者)がケーキ作っています。({output})");
-                    // ----------------- 標準出力表示用 -----------------
+                    ////////////////////// どうでも良いところ　----------------- 標準出力表示用 ----------------- //////////////////////
 
                     Thread.Sleep(m_random.Next(50, 300));
                 });
 
+                // ケーキをテーブルに置きます。
                 m_channel.Put(cake);
             }
         }

@@ -11,6 +11,7 @@ namespace ProducerConsumer
         }
         public static void Main(string[] args)
         {
+            // Channelオブジェクト
             IChannel<string> channel = new DinningTableChannel(8);
 
             // 5人のProducer
@@ -29,17 +30,22 @@ namespace ProducerConsumer
                 new CakeConsumer(channel, "消費者1"),
                 new CakeConsumer(channel, "消費者2"),
                 new CakeConsumer(channel, "消費者3"),
-                //new CakeConsumer(channel, "消費者4"),
+                new CakeConsumer(channel, "消費者4"),
                 //new CakeConsumer(channel, "消費者5"),
             };
 
+            // Producer全員に仕事をさせる
             producers.ForEach(p => Task.Run(() => p.Produce()));
+            // Consumer全員に仕事をさせる
             consumers.ForEach(c => Task.Run(() => c.Consume()));
 
             Console.ReadLine();
         }
     }
 
+    /// <summary>
+    /// 標準出力の行情報を連番で返す。
+    /// </summary>
     public static class ConsolePositionRepository
     {
         private static object _lock = new object();
