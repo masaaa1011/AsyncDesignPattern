@@ -80,13 +80,19 @@ namespace ProducerConsumer
                 {
                     m_putEventSlim.Wait();
                 }
-                
-                Console.WriteLine($"put by producer {data.Content}");
+
+                data.AddLabel(CakeIndexer.NextSerialNo());
                 m_cakes[m_nextPutPosition] = data;
 
                 // maxSize3: 0 -> 1 -> 2 -> 0 -> 1 -> 2 ...
                 m_nextPutPosition = (m_nextPutPosition + 1) % m_cakes.Length;
                 m_currentSize++;
+
+                // ----------------- 標準出力表示用 -----------------
+                var currentPositon = ConsolePositionRepository.GetNextCursorPosition();
+                Console.SetCursorPosition(currentPositon.Left, currentPositon.Top);
+                Console.WriteLine($"ケーキが用意できました {data.Content}");
+                // ----------------- 標準出力表示用 -----------------
 
                 // Take()の再開
                 m_takeEventSlim.Set();
@@ -112,13 +118,15 @@ namespace ProducerConsumer
                 }
 
                 var cake = m_cakes[m_nextTakePosition];
-
-                var indent = "                                                      ";
-                Console.WriteLine($"{indent}taken by consumer {cake.Content}");
-
                 // maxSize3: 0 -> 1 -> 2 -> 0 -> 1 -> 2 ...
                 m_nextTakePosition = (m_nextTakePosition + 1) % m_cakes.Length;
                 m_currentSize--;
+
+                // ----------------- 標準出力表示用 -----------------
+                var currentPositon = ConsolePositionRepository.GetNextCursorPosition();
+                Console.SetCursorPosition(currentPositon.Left, currentPositon.Top);
+                Console.WriteLine($"ケーキが購入されました。- {cake.Content}");
+                // ----------------- 標準出力表示用 -----------------
 
                 // Put()の再開
                 m_putEventSlim.Set();

@@ -9,6 +9,7 @@ namespace ProducerConsumer
     public interface IData<TType>
     {
         TType Content { get; }
+        void AddLabel(string label);
     }
 
     public class Cake : IData<string>
@@ -19,5 +20,10 @@ namespace ProducerConsumer
             m_cake = cake;
         }
         public string Content => $"{m_cake}";
+        public void AddLabel(string label)
+        {
+            m_cake = $"label: {label} - {m_cake}";
+        }
+
     }
 }
