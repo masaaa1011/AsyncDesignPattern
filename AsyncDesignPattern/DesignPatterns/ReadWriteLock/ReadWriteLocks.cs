@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,11 +27,18 @@ namespace ReadWriteLock
         private int m_readingReaders = 0;
         private int m_writingWriters = 0;
         private int m_watingWriters = 0;
-        private WhitchPreferReadOrWrite m_preferWriter = WhitchPreferReadOrWrite.Write;
-        private ManualResetEventSlim m_lockState = new ManualResetEventSlim();
+        private WhitchPreferReadOrWrite m_preferReadOrWrite = WhitchPreferReadOrWrite.Write;
+        private ManualResetEventSlim m_lockState = new ManualResetEventSlim(true);
 
-        private void OutputCondition()
-            => Console.WriteLine($"読み込み中スレッド={m_readingReaders},書き込み中スレッド={m_writingWriters},書き込み待ちスレッド={m_watingWriters}");
+        private object m_readLock = new object();
+        private object m_readUnLock = new object();
+        private object m_writeLock = new object();
+        private object m_writeUnLock = new object();
+
+        private void OutputCondition(string method)
+        { 
+            //Console.WriteLine($"{method} - 読み込み中スレッド={m_readingReaders},書き込み中スレッド={m_writingWriters},書き込み待ちスレッド={m_watingWriters}");
+        }
 
         /// <summary>
         /// Readロック取得
@@ -40,11 +48,16 @@ namespace ReadWriteLock
         /// </summary>
         public void ReadLock()
         {
-            while (m_writingWriters > 0 || (m_preferWriter == WhitchPreferReadOrWrite.Write && m_watingWriters > 0))
+            lock (m_readLock)
             {
-                m_lockState.Wait();
+                while (m_writingWriters > 0 || (m_preferReadOrWrite == WhitchPreferReadOrWrite.Write && m_watingWriters > 0))
+                {
+                    m_lockState.Wait();
+                }
+
+                m_readingReaders++;
+                OutputCondition("ReadLock");
             }
-            m_readingReaders++;
         }
 
         /// <summary>
@@ -54,10 +67,14 @@ namespace ReadWriteLock
         /// </summary>
         public void ReadUnLock()
         {
-            m_readingReaders--;
-            m_preferWriter = WhitchPreferReadOrWrite.Write;
+            lock (m_readUnLock)
+            {
+                m_readingReaders--;
+                m_preferReadOrWrite = WhitchPreferReadOrWrite.Write;
 
-            m_lockState.Set();
+                m_lockState.Set();
+                OutputCondition("ReadUnLock");
+            }
         }
 
         /// <summary>
@@ -68,13 +85,23 @@ namespace ReadWriteLock
         /// </summary>
         public void WriteLock()
         {
-            m_watingWriters++;
-            while (m_readingReaders > 0 || m_writingWriters > 0)
+            lock (m_writeLock)
             {
-                m_lockState.Wait();
+                m_watingWriters++;
+                try
+                {
+                    while (m_readingReaders > 0 || m_writingWriters > 0)
+                    {
+                        m_lockState.Wait();
+                    }
+                }
+                finally
+                {
+                    m_watingWriters--;
+                }
+                m_writingWriters++;
+                OutputCondition("WriteLock");
             }
-            m_watingWriters--;
-            m_writingWriters++;
         }
 
         /// <summary>
@@ -84,9 +111,13 @@ namespace ReadWriteLock
         /// </summary>
         public void WriteUnLock()
         {
-            m_writingWriters--;
-            m_preferWriter = WhitchPreferReadOrWrite.Read;
-            m_lockState.Set();
+            lock (m_writeUnLock)
+            {
+                m_writingWriters--;
+                m_preferReadOrWrite = WhitchPreferReadOrWrite.Read;
+                m_lockState.Set();
+                OutputCondition("WriteUnLock");
+            }
         }
     }
     public enum WhitchPreferReadOrWrite

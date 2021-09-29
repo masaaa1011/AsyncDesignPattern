@@ -23,6 +23,16 @@ namespace ReadWriteLock
     {
         private readonly char[] m_buffer;
         private readonly IReadWriteLock m_lock;
+
+        private readonly object m_outputLockObj = new object();
+        private void Logging(string message)
+        {
+            lock (m_outputLockObj)
+            {
+                Console.WriteLine(message);
+            }
+        }
+
         public CharData(int size, IReadWriteLock lockOjb)
         {
             m_buffer = new char[size];
@@ -35,17 +45,15 @@ namespace ReadWriteLock
             m_lock.ReadLock();
             try
             {
+
                 var source = new char[m_buffer.Length];
                 Enumerable.Range(0, m_buffer.Length).ToList().ForEach(
                     index => source[index] = m_buffer[index]
                     );
-                
-                System.Threading.Thread.Sleep(50);
+
+                Logging($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Read: {string.Join("", m_buffer)}");
+                System.Threading.Thread.Sleep(1000);
                 return source;
-            }
-            catch(Exception ex)
-            {
-                return null;
             }
             finally
             {
@@ -58,14 +66,13 @@ namespace ReadWriteLock
             m_lock.WriteLock();
             try
             {
+
                 Enumerable.Range(0, m_buffer.Length).ToList().ForEach(
                     index => m_buffer[index] = source
                     );
-                System.Threading.Thread.Sleep(50);
-            }
-            catch(Exception ex)
-            {
 
+                Logging($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Write: {source}");
+                System.Threading.Thread.Sleep(1000);
             }
             finally
             {

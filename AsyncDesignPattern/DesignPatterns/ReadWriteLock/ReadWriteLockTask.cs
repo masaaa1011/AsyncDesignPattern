@@ -14,7 +14,7 @@ namespace ReadWriteLock
         public static void Main(string[] args)
         {
             var data = new CharData(12, new ReadWriteLock());
-            var threats = new List<IThread>
+            var threads = new List<IThread>
             {
                 new ReaderThread(data),
                 new ReaderThread(data),
@@ -26,7 +26,10 @@ namespace ReadWriteLock
                 new WriterThread(data, @"\[]\^@:/-p;.")
             };
 
-            Parallel.ForEach(threats, t => t.Run());
+            //Parallel.ForEach(threads, t => t.Run());
+
+            threads.ForEach(f => Task.Run(() => f.Run()));
+            Console.ReadLine();
         }
     }
 }

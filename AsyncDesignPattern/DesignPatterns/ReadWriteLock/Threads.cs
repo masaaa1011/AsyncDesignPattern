@@ -23,7 +23,6 @@ namespace ReadWriteLock
             while (true)
             {
                 var readBuf = m_data.Read();
-                Console.WriteLine($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Read: {string.Join("", readBuf)}");
             }
         }
     }
@@ -51,14 +50,13 @@ namespace ReadWriteLock
             m_data = data;
             m_filter = @filter;
         }
-        public void Run()
+        public async void Run()
         {
             while (true)
             {
                 var c = Next();
-                Console.WriteLine($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Write: {string.Join("", c)}");
                 m_data.Write(c);
-                System.Threading.Thread.Sleep(m_random.Next(3000));
+                await System.Threading.Tasks.Task.Delay(m_random.Next(3000));
             }
         }
     }
