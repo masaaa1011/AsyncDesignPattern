@@ -28,15 +28,7 @@ namespace ReadWriteLock
         private int m_writingWriters = 0;
         private int m_watingWriters = 0;
         private WhitchPreferReadOrWrite m_preferReadOrWrite = WhitchPreferReadOrWrite.Write;
-        private ManualResetEventSlim m_signal = new ManualResetEventSlim();
-
         private object _lock = new object();
-
-
-        private object m_readLock = new object();
-        private object m_readUnLock = new object();
-        private object m_writeLock = new object();
-        private object m_writeUnLock = new object();
 
         /// <summary>
         /// Readロック取得
