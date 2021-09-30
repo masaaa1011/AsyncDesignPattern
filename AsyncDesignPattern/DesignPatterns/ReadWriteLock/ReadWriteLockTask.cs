@@ -14,8 +14,8 @@ namespace ReadWriteLock
         }
         public static void Main(string[] args)
         {
-            var data = new CharData(size: 12, lockOjb: new ReadWriteLock(), delayUplimit: 1000);
-            //var data = new CharData(size: 12, lockOjb: new NotReadWriteLock(), delayUplimit: 1000);
+            //var data = new CharData(size: 12, lockOjb: new ReadWriteLock(), delayUplimit: 1000);
+            var data = new CharData(size: 12, lockOjb: new NotReadWriteLock(), delayUplimit: 1000);
             var threads = new List<IThread>
             {
                 new ReaderThread(data: data),
