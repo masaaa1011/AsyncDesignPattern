@@ -23,8 +23,8 @@ namespace ReadWriteLock
     {
         private readonly char[] m_buffer;
         private readonly IReadWriteLock m_lock;
-
         private readonly object m_outputLockObj = new object();
+        private readonly int m_delayUplimit;
         private void Logging(string message)
         {
             lock (m_outputLockObj)
@@ -33,10 +33,11 @@ namespace ReadWriteLock
             }
         }
 
-        public CharData(int size, IReadWriteLock lockOjb)
+        public CharData(int size, IReadWriteLock lockOjb, int delayUplimit)
         {
             m_buffer = new char[size];
             m_lock = lockOjb;
+            m_delayUplimit = delayUplimit;
 
             Enumerable.Range(0, size).ToList().ForEach(index => m_buffer[index] = '*');
         }
@@ -45,14 +46,14 @@ namespace ReadWriteLock
             m_lock.ReadLock();
             try
             {
-
                 var source = new char[m_buffer.Length];
                 Enumerable.Range(0, m_buffer.Length).ToList().ForEach(
                     index => source[index] = m_buffer[index]
                     );
 
-                Logging($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Read: {string.Join("", m_buffer)}");
-                System.Threading.Thread.Sleep(1000);
+                //Logging($"{DateTime.Now.ToString("HH:mm:ss.fffffff")} [{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Read >>> {string.Join("", m_buffer)}");
+                System.Threading.Thread.Sleep(m_delayUplimit);
+
                 return source;
             }
             finally
@@ -64,15 +65,14 @@ namespace ReadWriteLock
         public void Write(char source)
         {
             m_lock.WriteLock();
+            Logging($"{DateTime.Now.ToString("HH:mm:ss.fffffff")} [{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Write >>> {source}");
             try
             {
-
                 Enumerable.Range(0, m_buffer.Length).ToList().ForEach(
                     index => m_buffer[index] = source
                     );
 
-                Logging($"[{System.Threading.Thread.CurrentThread.ManagedThreadId}] - Write: {source}");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(m_delayUplimit);
             }
             finally
             {
